@@ -1,6 +1,6 @@
 
 import { Component, OnInit } from '@angular/core';
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
 import { HttpService }  from '../http.service';
 
 @Component({
@@ -14,6 +14,7 @@ export class ViewDataComponent implements OnInit {
 
   showData:boolean;
 
+  historicalData:boolean;
 
   showUpdateDataMessage:boolean;
 
@@ -23,14 +24,17 @@ export class ViewDataComponent implements OnInit {
 
   numOfData:string;
 
+  currentView:number;
+
   constructor(private _httpService:HttpService, private _router: Router) {
     this.data = [];
     this.showMessage  = true;
+    this.historicalData = false;
     this.showData = false;
     this.showUpdateDataMessage = false;
     this.numOfData = '10';
     this.showDataDeletedMessage = false;
-
+    this.currentView = 0;
   }
 
   ngOnInit() {
@@ -44,9 +48,10 @@ export class ViewDataComponent implements OnInit {
   }
 
   aquireData(){
-    this.showData = false;
-    this.showMessage  = true;
-    var dataObs = this._httpService.getDataFromDatabase(this.numOfData);
+    console.log(this.currentView);
+    //this.showData = false;
+    //this.showMessage  = true;
+    var dataObs = this._httpService.getDataFromDatabase(this.numOfData, this.currentView);
     dataObs.subscribe(data=>{
       if(data['success'] != 1){
         console.log(data['message']);
@@ -55,7 +60,7 @@ export class ViewDataComponent implements OnInit {
         this.data = data['data'];
 
         if (localStorage.getItem("dataUpdated") == "true"){
-          this.showUpdateDataMessage = true;
+          //this.showUpdateDataMessage = true;
           localStorage.setItem("dataUpdated","false");
         }
 
@@ -64,8 +69,6 @@ export class ViewDataComponent implements OnInit {
       }
     })
   }
-
-
 
   deleteData(row:any){
     console.log('Deleting Data...');

@@ -95,7 +95,29 @@ app.post('/getData', function(request, response){
      if (err){
        return response.json({success:-1, message:err});
      }
-     conn.query("SELECT * FROM "+process.env.DB_SCHEMA+".HOME_SALES ORDER BY ID DESC LIMIT "+request.body.num+";", function (err, data) {
+
+     var table = (function(currView) {
+      switch(currView) {
+        case 0:
+          return "COLEGIO";
+        case 1:
+          return "MESA";
+        case 2:
+          return "PARTIDO";
+        case 3:
+          return "VOTANTE";
+        case 4:
+          return "MUNICIPAL";
+        case 5:
+          return "FEDERAL";
+        default:
+          return "";
+      }
+    })(request.body.view);
+    
+     var selectQuery = "SELECT * FROM "+process.env.DB_SCHEMA+"."+table+ "ORDER BY ID DESC LIMIT "+request.body.num+";";
+
+     conn.query(selectQuery, function (err, data) {
        if (err){
          return response.json({success:-1, message:err});
        }

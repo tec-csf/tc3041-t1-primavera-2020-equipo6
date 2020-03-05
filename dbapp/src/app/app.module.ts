@@ -5,6 +5,12 @@ import { HttpClientModule, HttpClient } from '@angular/common/http'
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AgmCoreModule } from '@agm/core';
+import { MatTabsModule } from '@angular/material/tabs';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule, MatInputModule } from '@angular/material';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -30,6 +36,13 @@ import { ViewEntryComponent } from './view-entry/view-entry.component';
     AppRoutingModule,
      FormsModule,
      FontAwesomeModule,
+     MatTabsModule,
+     BrowserAnimationsModule,
+     MatCheckboxModule,
+     MatDatepickerModule,
+     MatNativeDateModule,
+     MatFormFieldModule,
+     MatInputModule,
      AgmCoreModule.forRoot({
       apiKey: 'AIzaSyAM0KXiz3xTv9KAvnOIdm5J0Agnwp3_lOI'
     })

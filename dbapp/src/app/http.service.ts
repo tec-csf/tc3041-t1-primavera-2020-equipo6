@@ -21,10 +21,9 @@ export class HttpService {
     })
   };
 
-  createNewDataEntry(houseInfo, addressInfo) {
-    const payload = JSON.stringify(houseInfo);
-    const payload2 = JSON.stringify(addressInfo);
-    return this.http.post(environment.NODE_HOST + '/newDataEntry', { house: payload, address: payload2 }, this.httpOptions);
+  createNewDataEntry(info, currentView) {
+    const payload = JSON.stringify(info);
+    return this.http.post(environment.NODE_HOST + '/newDataEntry', { content: payload, view:currentView }, this.httpOptions);
   }
 
   getDataFromDatabase(id, currentView) {

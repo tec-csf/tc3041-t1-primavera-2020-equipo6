@@ -43,51 +43,77 @@ var geocoder = NodeGeocoder(options);
 
 let connStr = "DATABASE="+process.env.DB_DATABASE+";HOSTNAME="+process.env.DB_HOSTNAME+";PORT="+process.env.DB_PORT+";PROTOCOL=TCPIP;UID="+process.env.DB_UID+";PWD="+process.env.DB_PWD+";";
 
-
-
-
-//let connStr = "DATABASE=BLUDB;HOSTNAME=db2whoc-flex-zipnqsp.services.au-syd.bluemix.net;PORT=50000;PROTOCOL=TCPIP;UID=bluadmin;PWD=zWG@U4q1uFpDTi0v8jVBDI7_PtSr0;";
-
  app.post('/newDataEntry', function(request, response){
-   var house = JSON.parse(request.body['house']);
+   var content = JSON.parse(request.body['content']);
 
     ibmdb.open(connStr, function (err,conn) {
       if (err){
         return response.json({success:-1, message:err});
       }
-      conn.query("SELECT MAX(ID) FROM "+process.env.DB_SCHEMA+".HOME_SALES;", function (err, data) {
+
+      var str = getInsertQuery(request.body['view'], content);
+      conn.query(str, function (err, data) {
         if (err){
           return response.json({success:-2, message:err});
         }
         else{
-          var id = data[0]['1'] + 1;
-          var address_info = JSON.parse(request.body['address']);
-
-          var str = "INSERT INTO "+process.env.DB_SCHEMA+".HOME_ADDRESS (ADDRESS1, ADDRESS2, CITY, STATE,ZIPCODE, COUNTRY,HOME_ID) VALUES ('"+address_info['address1']+"', '"+address_info['address2']+"', '"+address_info['city']+"', '"+address_info['state']+"', "+address_info['zipcode']+", '"+address_info['country']+"', "+id+");";
-
-          var s = "INSERT INTO "+process.env.DB_SCHEMA+".HOME_SALES (ID,LOTAREA, YEARBUILT, BLDGTYPE,HOUSESTYLE,OVERALLCOND,ROOFSTYLE,EXTERCOND,FOUNDATION,BSMTCOND,HEATING,HEATINGQC,CENTRALAIR,ELECTRICAL,FULLBATH,HALFBATH,BEDROOMABVGR,KITCHENABVGR,KITCHENQUAL,TOTRMSABVGRD,FIREPLACES,FIREPLACEQU,GARAGETYPE,GARAGEFINISH,GARAGECARS,GARAGECOND,POOLAREA,POOLQC,FENCE,MOSOLD,YRSOLD,SALEPRICE ) VALUES ("+id+","+house['lotArea']+","+house['yearBuilt']+",'"+house['bldgType']+"','"+house['houseStyle']+"',"+house['overallCond']+",'"+house['roofStyle']+"','"+house['exterCond']+"','"+house['foundation']+"','"+house['bsmtCond']+"','"+house['heating']+"','"+house['heatingQC']+"','"+house['centralAir']+"','"+house['electrical']+"',"+house['fullBath']+","+house['halfBath']+","+house['bedroomAbvGr']+","+house['kitchenAbvGr']+",'"+house['kitchenQual']+"',"+house['tempotRmsAbvGrd']+","+house['fireplaces']+",'"+house['fireplaceQu']+"','"+house['garageType']+"','"+house['garageFinish']+"',"+house['garageCars']+",'"+house['garageCond']+"',"+house['poolArea']+",'"+house['poolQC']+"','"+house['fence']+"',"+house['moSold']+","+house['yrSold']+","+house['salePrice']+");";
-          conn.query(s, function (err, data) {
-            if (err){
-              return response.json({success:-3, message:err});
-            }
-            else{
-              conn.query(str, function (err, data) {
-                if (err){
-                  return response.json({success:-4, message:err});
-                }
-                else{
-                  conn.close(function () {
-                    return response.json({success:1, message:'Data Entered!'});
-                  });
-                }
-              });
-            }
+          conn.close(function () {
+            return response.json({success:1, message:'Data Entered!'});
           });
         }
       });
     });
 
 })
+
+// conn.query("SELECT MAX(ID) FROM "+process.env.DB_SCHEMA+"."+table+";", function (err, data) {
+//   if (err){
+//     return response.json({success:-2, message:err});
+//   }
+//   else{
+//     var id = data[0]['1'] + 1;
+
+function getViewName(view) {
+  return (function(currView) {
+    switch(currView) {
+      case 0:
+        return "COLEGIO";
+      case 1:
+        return "MESA";
+      case 2:
+        return "PARTIDO";
+      case 3:
+        return "VOTANTE";
+      case 4:
+        return "MUNICIPAL";
+      case 5:
+        return "FEDERAL";
+      default:
+        return "";
+    }
+  })(view);
+}
+
+function getInsertQuery(view, obj) {
+  return (function(currView) {
+    switch(currView) {
+      case 0:
+        return "INSERT INTO "+process.env.DB_SCHEMA+".COLEGIO (id, start_date, end_date) VALUES ('"+obj['id']+"', '"+obj['startDate']+"', '"+obj['endDate']+"');";
+      case 1:
+        return "MESA";
+      case 2:
+        return "PARTIDO";
+      case 3:
+        return "VOTANTE";
+      case 4:
+        return "MUNICIPAL";
+      case 5:
+        return "FEDERAL";
+      default:
+        return "";
+    }
+  })(view);
+}
 
 app.post('/getData', function(request, response){
   console.log('hi')
@@ -114,8 +140,8 @@ app.post('/getData', function(request, response){
           return "";
       }
     })(request.body.view);
-    
-     var selectQuery = "SELECT * FROM "+process.env.DB_SCHEMA+"."+table+ "ORDER BY ID DESC LIMIT "+request.body.num+";";
+
+     var selectQuery = "SELECT * FROM "+process.env.DB_SCHEMA+"."+table+ " ORDER BY ID DESC LIMIT "+request.body.num+";";
 
      conn.query(selectQuery, function (err, data) {
        if (err){

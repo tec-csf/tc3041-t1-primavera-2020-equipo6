@@ -10,7 +10,7 @@ const routes: Routes = [
   {path: 'header', component: HeaderComponent},
   {path: '', component: LoadDataComponent},
   {path: 'viewData', component: ViewDataComponent},
-  {path: 'editData/:id', component: EditDataComponent},
+  {path: 'editData/:type/:id', component: EditDataComponent},
   {path: 'viewEntry/:id', component: ViewEntryComponent}
 ];
 

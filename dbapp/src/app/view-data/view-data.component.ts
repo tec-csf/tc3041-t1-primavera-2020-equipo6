@@ -58,6 +58,7 @@ export class ViewDataComponent implements OnInit {
       }
       else{
         this.data = data['data'];
+        console.log(this.data);
 
         if (localStorage.getItem("dataUpdated") == "true"){
           //this.showUpdateDataMessage = true;

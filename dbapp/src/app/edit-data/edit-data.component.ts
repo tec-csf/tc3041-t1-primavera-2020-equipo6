@@ -28,6 +28,13 @@ export class EditDataComponent implements OnInit {
 
   model: HouseInfo;
 
+  editColegio:boolean;
+  editMesa:boolean;
+  editPartido:boolean;
+  editVotante:boolean;
+  editMunicipal:boolean;
+  editFederal:boolean;
+
   errFullBath:boolean;
   errHalfBath:boolean;
   errBedroomAbvGr:boolean;
@@ -60,6 +67,15 @@ export class EditDataComponent implements OnInit {
     this.rowID = '';
     this.data = [];
     this.data2 = [];
+
+    this.editColegio = false;
+    this.editColegio = false;
+    this.editMesa = false;
+    this.editPartido = false;
+    this.editVotante = false;
+    this.editMunicipal = false;
+    this.editFederal = false;
+    
 
     this.errAddress1 = false;
     this.errAddress2= false;
@@ -105,12 +121,42 @@ export class EditDataComponent implements OnInit {
     this._activaterouter.params.subscribe(
       params=>{
         this.rowID = params['id'];
+        console.log(params);
+        this.setTypeBools(params['type']);
         console.log('rowID: ' + this.rowID);
       })
       this.getDataEntry();
   }
 
-
+  setTypeBools(type) {
+    switch(type) {
+      case "colegio": {
+        console.log("colegio");
+        this.editColegio = true;
+        break;
+      }
+      case "mesa": {
+        this.editMesa = true;
+        break;
+      }
+      case "partido": {
+        this.editPartido = true;
+        break;
+      }
+      case "votante": {
+        this.editVotante = true;
+        break;
+      }
+      case "municipal": {
+        this.editMunicipal = true;
+        break;
+      }
+      case "federal": {
+        this.editFederal = true;
+        break;
+      }
+    }
+  }
 
   checkInputs(){
     this.validateInputs = true;

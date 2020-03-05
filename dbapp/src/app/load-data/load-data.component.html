@@ -14,6 +14,11 @@
                                         <div class="card-body">
                     <div class="form-row" style="margin-bottom:0px;">
                             <div class="col-md-2 mb-3">
+                              <label for="id">ID</label>
+                              <input type="text" class="form-control" placeholder="1234 abc st." required [(ngModel)]="colegioModel.id" #opCarrier="ngModel" name="id">
+                              <small class="text-danger" *ngIf=errAddress1>Please Enter A Valid ID</small>
+                            </div>
+                            <div class="col-md-2 mb-3">
                               <label for="startDate">Fecha inicio</label>
                               <input type="text" class="form-control" placeholder="1234 abc st." required [(ngModel)]="colegioModel.startDate" #opCarrier="ngModel" name="startDate">
                               <small class="text-danger" *ngIf=errAddress1>Please Enter A Valid Date</small>
@@ -24,7 +29,7 @@
                               <small class="text-danger" *ngIf=errAddress2>Please Enter A Valid Date</small>
                             </div>
                             <div class="col-md-2 mb-3" style="margin-top:35px; margin-left:15px;">
-                              <button class="btn btn-primary btn-sm" type="submit" (click)=submitColegio()>SUBMIT DATA</button>
+                              <button class="btn btn-primary btn-sm" type="submit" (click)="submitData(0)">SUBMIT DATA</button>
                             </div>
                           </div>
                         </div>
@@ -60,7 +65,7 @@
                                                             <small class="text-danger" *ngIf=errLotArea>Please Enter A Valid Number</small></div>
                             </div>
                             <div class="col-md-2 mb-3" style="margin-top:35px; margin-left:15px;">
-                              <button class="btn btn-primary btn-sm" type="submit" (click)=submitMesa()>SUBMIT DATA</button>
+                              <button class="btn btn-primary btn-sm" type="submit" (click)=submitData(1)>SUBMIT DATA</button>
                             </div>
                           </div>
                         </div>
@@ -83,7 +88,7 @@
                             <label for="username"><strong>Presidente</strong></label><input class="form-control" type="text" placeholder="Bedroom Above Ground" required [(ngModel)]="partidoModel.presidente" #opCarrier="ngModel" name="presidente"><small class="text-danger" *ngIf=errBedroomAbvGr>Please Enter A Valid Number</small>
                             </div>
                             <div class="col-md-2 mb-3" style="margin-top:35px; margin-left:15px;">
-                              <button class="btn btn-primary btn-sm" type="submit" (click)=submitPartido()>SUBMIT DATA</button>
+                              <button class="btn btn-primary btn-sm" type="submit" (click)=submitData(2)>SUBMIT DATA</button>
                             </div>
                           </div>
                         </div>
@@ -128,7 +133,7 @@
                                                                  class="text-danger" *ngIf=errBldgType>Please Choose An Option</small>
                              </div>
                              <div class="col-md-2 mb-3" style="margin-top:35px; margin-left:15px;">
-                              <button class="btn btn-primary btn-sm" type="submit" (click)=submitVotante()>SUBMIT DATA</button>
+                              <button class="btn btn-primary btn-sm" type="submit" (click)=submitData(3)>SUBMIT DATA</button>
                             </div>
 
                           </div>
@@ -162,7 +167,7 @@
                         <label for="email"><strong>Numero de Votos</strong></label><input class="form-control" type="email" placeholder="Total Rooms AbvGr" required [(ngModel)]="municipalModel.numVotos" #opCarrier="ngModel" name="numVotos"><small class="text-danger" *ngIf=errTotRmsAbvGrd>Please Enter A Valid Number</small></div>
                       </div>
                       <div class="col-md-2 mb-3" style="margin-top:35px; margin-left:15px;">
-                        <button class="btn btn-primary btn-sm" type="submit" (click)=submitMunicipal()>SUBMIT DATA</button>
+                        <button class="btn btn-primary btn-sm" type="submit" (click)=submitData(4)>SUBMIT DATA</button>
                       </div>
                           </div>
                         </div>
@@ -196,7 +201,7 @@
                         <label for="email"><strong>Numero de Votos</strong></label><input class="form-control" type="email" placeholder="Total Rooms AbvGr" required [(ngModel)]="federalModel.numVotos" #opCarrier="ngModel" name="numVotos"><small class="text-danger" *ngIf=errTotRmsAbvGrd>Please Enter A Valid Number</small></div>
                       </div>
                       <div class="col-md-2 mb-3" style="margin-top:35px; margin-left:15px;">
-                        <button class="btn btn-primary btn-sm" type="submit" (click)=submitFederal()>SUBMIT DATA</button>
+                        <button class="btn btn-primary btn-sm" type="submit" (click)=submitData(5)>SUBMIT DATA</button>
                       </div>
                           </div>
                         </div>

@@ -52,7 +52,7 @@ export class ViewEntryComponent implements OnInit {
   }
 
   getDataEntry(){
-    var dataObs = this.httpService.getUniqueDataFromDatabase(this.rowID);
+    var dataObs = this.httpService.getUniqueDataFromDatabase(this.rowID, 0);
     dataObs.subscribe(data => {
       if(data['success'] != 1){
         console.log(data['message']);

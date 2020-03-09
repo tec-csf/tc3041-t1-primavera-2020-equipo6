@@ -2,8 +2,13 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import { HttpService } from '../http.service';
-import { HouseInfo } from '../models/house-info';
-import { AddressInfo } from '../models/address-info';
+import { ColegioInfo } from '../models/colegio-info';
+import { FederalInfo } from '../models/federal-info';
+import { MesaInfo } from '../models/mesa-info';
+import { MunicipalInfo } from '../models/municipal-info';
+import { PartidoInfo } from '../models/partido-info';
+import { VotanteInfo } from '../models/votante-info';
+
 
 @Component({
   selector: 'app-edit-data',
@@ -14,8 +19,7 @@ export class EditDataComponent implements OnInit {
 
   rowID:string;
   data:any;
-
-  addressModel:AddressInfo;
+  view:number;
 
   showMessage:boolean;
   showData:boolean;
@@ -26,8 +30,6 @@ export class EditDataComponent implements OnInit {
   greenErrorMessage:boolean;
   greenMessage:string;
 
-  model: HouseInfo;
-
   editColegio:boolean;
   editMesa:boolean;
   editPartido:boolean;
@@ -35,38 +37,19 @@ export class EditDataComponent implements OnInit {
   editMunicipal:boolean;
   editFederal:boolean;
 
-  errFullBath:boolean;
-  errHalfBath:boolean;
-  errBedroomAbvGr:boolean;
-  errKitchenAbvGr:boolean;
-  errTotRmsAbvGrd:boolean;
-  errPoolArea:boolean;
-  errFireplaces:boolean;
-  errGarageCars:boolean;
-  errMoSold:boolean;
-  errYrSold:boolean;
-  errSalePrice:boolean;
-  errLotArea:boolean;
-  errOverallCond:boolean;
-  errYearBuilt:boolean;
+  colegioModel:ColegioInfo;
+  federalModel:FederalInfo;
+  mesaModel:MesaInfo;
+  municipalModel:MunicipalInfo;
+  partidoModel:PartidoInfo;
+  votanteModel:VotanteInfo;
 
   validateInputs:boolean;
-  data2:any;
-
-  errAddress1:boolean;
-  errAddress2:boolean;
-  errCity:boolean;
-  errState:boolean;
-  errZipCode:boolean;
-  errCountry:boolean;
-
-
-
 
   constructor(private _activaterouter:ActivatedRoute, private _httpService:HttpService, private _router: Router) {
     this.rowID = '';
     this.data = [];
-    this.data2 = [];
+    this.view = 0;
 
     this.editColegio = false;
     this.editColegio = false;
@@ -75,21 +58,15 @@ export class EditDataComponent implements OnInit {
     this.editVotante = false;
     this.editMunicipal = false;
     this.editFederal = false;
-    
-
-    this.errAddress1 = false;
-    this.errAddress2= false;
-    this.errCity= false;
-    this.errState= false;
-    this.errZipCode= false;
-    this.errCountry= false;
 
     this.validateInputs = true;
 
-    this.addressModel = new AddressInfo('', '', '', '', '', '');
-
-    this.model = new HouseInfo('', 'Select BldgType', 'Select HouseStyle', '', '', '', '', '', '', 'Select KitchenQual', '', 'Select Heating', 'Select HeatingQC', 'Select CentralAir', 'Select Electrical', 'Select RoofStyle', 'Select ExterCond', 'Select Foundation', 'Select BsmtCond', '', 'Select PoolQC', '', 'Select FireplaceQu', 'Select GarageType', 'Select GarageFinish', '', 'Select GarageCond', 'Select Fence', '', '', '');
-
+    this.colegioModel = new ColegioInfo('', '', '');
+    this.federalModel = new FederalInfo('', '', '');
+    this.mesaModel = new MesaInfo('', '', '');
+    this.municipalModel = new MunicipalInfo('', '', '');
+    this.partidoModel = new PartidoInfo('', '', '');
+    this.votanteModel = new VotanteInfo('', '', '', '', '', '');
 
     this.showMessage = true;
     this.showData = false;
@@ -99,22 +76,6 @@ export class EditDataComponent implements OnInit {
 
     this.greenErrorMessage= false;
     this.greenMessage = '';
-
-
-    this.errFullBath = false;
-    this.errHalfBath  = false;
-    this.errBedroomAbvGr = false;
-    this.errKitchenAbvGr = false;
-    this.errTotRmsAbvGrd = false;
-    this.errPoolArea = false;
-    this.errFireplaces = false;
-    this.errGarageCars = false;
-    this.errMoSold = false;
-    this.errYrSold = false;
-    this.errSalePrice = false;
-    this.errLotArea = false;
-    this.errOverallCond = false;
-    this.errYearBuilt = false;
   }
 
   ngOnInit() {
@@ -133,206 +94,77 @@ export class EditDataComponent implements OnInit {
       case "colegio": {
         console.log("colegio");
         this.editColegio = true;
+        this.view = 0;
         break;
       }
       case "mesa": {
         this.editMesa = true;
+        this.view = 1;
         break;
       }
       case "partido": {
         this.editPartido = true;
+        this.view = 2;
         break;
       }
       case "votante": {
         this.editVotante = true;
+        this.view = 3;
         break;
       }
       case "municipal": {
         this.editMunicipal = true;
+        this.view = 4;
         break;
       }
       case "federal": {
         this.editFederal = true;
+        this.view = 5;
         break;
       }
     }
   }
 
   checkInputs(){
-    this.validateInputs = true;
-
-    if(this.model.bldgType.search('Select') != -1){ this.model.bldgType = this.data['BLDGTYPE']; }
-    if(this.model.houseStyle.search('Select') != -1){ this.model.houseStyle = this.data['HOUSESTYLE']; }
-    if(this.model.kitchenQual.search('Select') != -1){ this.model.kitchenQual = this.data['KITCHENQUAL']; }
-    if(this.model.heating.search('Select') != -1){ this.model.heating = this.data['HEATING']; }
-    if(this.model.heatingQC.search('Select') != -1){ this.model.heatingQC = this.data['HEATINGQC']; }
-    if(this.model.centralAir.search('Select') != -1){this.model.centralAir = this.data['CENTRALAIR']; }
-    if(this.model.electrical.search('Select') != -1){ this.model.electrical = this.data['ELECTRICAL']; }
-    if(this.model.roofStyle.search('Select') != -1){ this.model.roofStyle = this.data['ROOFSTYLE']; }
-    if(this.model.exterCond.search('Select') != -1){ this.model.exterCond = this.data['EXTERCOND']; }
-    if(this.model.foundation.search('Select') != -1){ this.model.foundation = this.data['FOUNDATION']; }
-    if(this.model.bsmtCond.search('Select') != -1){ this.model.bsmtCond = this.data['BSMTCOND']; }
-    if(this.model.poolQC.search('Select') != -1){  this.model.poolQC = this.data['POOLQC'];   }
-    if(this.model.fireplaceQu.search('Select') != -1){ this.model.fireplaceQu = this.data['FIREPLACEQU']; }
-    if(this.model.garageType.search('Select') != -1){ this.model.garageType = this.data['GARAGETYPE']; }
-    if(this.model.garageFinish.search('Select') != -1){ this.model.garageFinish = this.data['GARAGEFINISH']; }
-    if(this.model.garageCond.search('Select') != -1){ this.model.garageCond = this.data['GARAGECOND']; }
-    if(this.model.fence.search('Select') != -1){ this.model.fence = this.data['FENCE']; }
-
-
-
-    if (this.model.lotArea == ''){ this.model.lotArea = this.data['LOTAREA']; this.errLotArea = false;  }
-    else{
-      if (Number.isNaN(Number(this.model.lotArea))){ this.errLotArea = true;  this.validateInputs = false;}
-      else{ this.errLotArea = false; }
-    }
-
-    if (this.model.overallCond == ''){ this.model.overallCond = this.data['OVERALLCOND']; this.errOverallCond = false; }
-    else{
-      if (Number.isNaN(Number(this.model.overallCond))){ this.errOverallCond = true;this.validateInputs = false; }
-      else{ this.errOverallCond = false; }
-    }
-
-    if (this.model.yearBuilt == ''){ this.model.yearBuilt = this.data['YEARBUILT'];this.errYearBuilt = false; }
-    else{
-      if (Number.isNaN(Number(this.model.yearBuilt))){ this.errYearBuilt = true; this.validateInputs = false;}
-      else{ this.errYearBuilt = false; }
-    }
-
-    if (this.model.fullBath == '') { this.model.fullBath = this.data['FULLBATH']; this.errFullBath = false; }
-    else{
-      if (Number.isNaN(Number(this.model.fullBath))){ this.errFullBath = true; this.validateInputs = false;}
-      else{ this.errFullBath = false; }
-    }
-
-    if (this.model.halfBath == ''){  this.model.halfBath = this.data['HALFBATH']; this.errHalfBath = false;  }
-    else{
-      if (Number.isNaN(Number(this.model.halfBath))){ this.errHalfBath = true;this.validateInputs = false; }
-      else{ this.errHalfBath = false; }
-    }
-
-    if (this.model.bedroomAbvGr == ''){ this.model.bedroomAbvGr = this.data['BEDROOMABVGR']; this.errBedroomAbvGr = false;    }
-    else{
-      if (Number.isNaN(Number(this.model.bedroomAbvGr))){ this.errBedroomAbvGr = true; this.validateInputs = false;}
-      else{ this.errBedroomAbvGr = false; }
-    }
-
-    if (this.model.kitchenAbvGr == ''){ this.model.kitchenAbvGr = this.data['KITCHENABVGR']; this.errKitchenAbvGr = false; }
-    else{
-      if (Number.isNaN(Number(this.model.kitchenAbvGr))){ this.errKitchenAbvGr = true; this.validateInputs = false;}
-      else{ this.errKitchenAbvGr = false; }
-    }
-
-    if (this.model.tempotRmsAbvGrd == ''){ this.model.tempotRmsAbvGrd = this.data['TOTRMSABVGRD']; this.errTotRmsAbvGrd = false;    }
-    else{
-      if (Number.isNaN(Number(this.model.tempotRmsAbvGrd))){ this.errTotRmsAbvGrd = true; this.validateInputs = false;}
-      else{ this.errTotRmsAbvGrd = false; }
-    }
-
-    if (this.model.poolArea == ''){   this.model.poolArea = this.data['POOLAREA'];this.errPoolArea = false;    }
-    else{
-      if (Number.isNaN(Number(this.model.poolArea))){ this.errPoolArea = true;this.validateInputs = false; }
-      else{ this.errPoolArea = false; }
-    }
-
-    if (this.model.fireplaces == ''){        this.model.fireplaces = this.data['FIREPLACES'];      this.errFireplaces = false;    }
-    else{
-      if (Number.isNaN(Number(this.model.fireplaces))){ this.errFireplaces = true;this.validateInputs = false; }
-      else{ this.errFireplaces = false; }
-    }
-
-    if (this.model.garageCars == ''){     this.model.garageCars = this.data['GARAGECARS'];     this.errGarageCars = false;  }
-    else{
-      if (Number.isNaN(Number(this.model.garageCars))){ this.errGarageCars = true;this.validateInputs = false; }
-      else{ this.errGarageCars = false; }
-    }
-
-    if (this.model.moSold == ''){      this.model.moSold = this.data['MOSOLD'];    this.errMoSold = false;    }
-    else{
-      if (Number.isNaN(Number(this.model.moSold))){ this.errMoSold = true;this.validateInputs = false; }
-      else{ this.errMoSold = false; }
-    }
-
-    if (this.model.yrSold == ''){   this.model.yrSold = this.data['YRSOLD'];    this.errYrSold = false;  }
-    else{
-      if (Number.isNaN(Number(this.model.yrSold))){ this.errYrSold = true;this.validateInputs = false; }
-      else{ this.errYrSold = false; }
-    }
-
-    if (this.model.salePrice == ''){       this.model.salePrice = this.data['SALEPRICE'];       this.errSalePrice = false;     }
-    else{
-       if (Number.isNaN(Number(this.model.salePrice))){ this.errSalePrice = true; this.validateInputs = false;}
-       else{ this.errSalePrice = false; }
-    }
-
-    if (this.addressModel.zipcode == ''){
-
-           this.addressModel.zipcode = this.data2['ZIPCODE'];
-
-           this.errZipCode = false;
-    }
-    else{
-
-       if (Number.isNaN(Number(this.addressModel.zipcode))){ this.errZipCode = true; this.validateInputs = false;}
-       else{ this.errZipCode = false; }
-    }
-
-    if (this.addressModel.address1 == ''){      this.addressModel.address1 = this.data2['ADDRESS1'];       this.errAddress1 = false;     }
-    if (this.addressModel.address2 == ''){      this.addressModel.address2 = this.data2['ADDRESS2'];       this.errAddress2 = false;     }
-    if (this.addressModel.city == ''){      this.addressModel.city = this.data2['CITY'];       this.errCity = false;     }
-    if (this.addressModel.state == ''){      this.addressModel.state = this.data2['STATE'];       this.errState = false;     }
-    if (this.addressModel.country == ''){      this.addressModel.country = this.data2['COUNTRY'];       this.errCountry = false;     }
-
-
-
-
-    console.log(this.model);
-    return this.validateInputs;
-
+    return true;
   }
 
   submitData(){
-    var check = this.checkInputs();
-    console.log(check);
-    if (check == false){
-      this.errMessage = 'Please enter the fields correctly!';
-      this.errErrorMessage = true;
-      window.scrollTo(0 , 0);
-    }
-    else{
-      console.log(this.addressModel)
-      this.errErrorMessage = false;
-      var dataObs = this._httpService.updateDataEntry(this.rowID,this.model, this.addressModel);
-      dataObs.subscribe(data=>{
-        if(data['success'] != 1){
-          console.log(data['message']);
-        }
-        else{
-          console.log(data['message']);
-          localStorage.setItem("dataUpdated","true");
-          this._router.navigate(['/viewData']);
-        }
-      })
-    }
+    // var check = this.checkInputs();
+    // console.log(check);
+    // if (check == false){
+    //   this.errMessage = 'Please enter the fields correctly!';
+    //   this.errErrorMessage = true;
+    //   window.scrollTo(0 , 0);
+    // }
+    // else{
+    //   this.errErrorMessage = false;
+    //   var dataObs = this._httpService.updateDataEntry(this.rowID,this.model, this.addressModel);
+    //   dataObs.subscribe(data=>{
+    //     if(data['success'] != 1){
+    //       console.log(data['message']);
+    //     }
+    //     else{
+    //       console.log(data['message']);
+    //       localStorage.setItem("dataUpdated","true");
+    //       this._router.navigate(['/viewData']);
+    //     }
+    //   })
+    // }
 
   }
 
   getDataEntry(){
-    var dataObs = this._httpService.getUniqueDataFromDatabase(this.rowID);
+    var dataObs = this._httpService.getUniqueDataFromDatabase(this.rowID, this.view);
     dataObs.subscribe(data=>{
       if(data['success'] != 1){
         console.log(data['message']);
       }
       else{
-
-
         this.data = data['data'][0];
-        this.data2 = data['data2'][0];
         this.showMessage = false;
         this.showData = true;
-        console.log(this.data2);
         console.log(this.data);
-
       }
     })
   }

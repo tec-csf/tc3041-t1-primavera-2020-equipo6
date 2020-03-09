@@ -31,8 +31,9 @@ export class HttpService {
     return this.http.post(environment.NODE_HOST + '/getData', { num: id, view:currentView }, this.httpOptions);
   }
 
-  getUniqueDataFromDatabase(id) {
-    return this.http.post(environment.NODE_HOST + '/getUniqueData', { id: id }, this.httpOptions);
+  getUniqueDataFromDatabase(id, currentView) {
+    console.log(currentView);
+    return this.http.post(environment.NODE_HOST + '/getUniqueData', { id: id, view:currentView }, this.httpOptions);
   }
 
   deleteDataFromDatabase(id) {

@@ -1,213 +1,247 @@
-<div  id="page-top">
-    <div id="wrapper" >
-        <div class="d-flex flex-column" id="content-wrapper" >
-            <div id="content" >
-                <div class="container-fluid" >
-                    <h3 class="text-dark mb-4" >House Information</h3>
-                    <div class="alert alert-danger" role="alert" *ngIf=errErrorMessage><span><strong>{{errMessage}}</strong></span></div>
-                    <div class="alert alert-success" role="alert" *ngIf=greenErrorMessage><span><strong>{{greenMessage}}</strong></span></div>
+<div id="page-top">
+  <div id="wrapper">
+    <div class="d-flex flex-column" id="content-wrapper">
+      <div id="content">
+        <div class="container-fluid">
+          <h3 class="text-dark mb-4">House Information</h3>
+          <div class="alert alert-danger" role="alert" *ngIf=errErrorMessage>
+            <span><strong>{{errMessage}}</strong></span></div>
+          <div class="alert alert-success" role="alert" *ngIf=greenErrorMessage>
+            <span><strong>{{greenMessage}}</strong></span></div>
 
-                   <div class="card shadow mb-3" >
-                                        <div class="card-header py-3">
-                                            <p class="text-primary m-0 font-weight-bold">Colegio</p>
-                                        </div>
-                                        <div class="card-body">
-                    <div class="form-row" style="margin-bottom:0px;">
-                            <div class="col-md-2 mb-3">
-                              <label for="id">ID</label>
-                              <input type="text" class="form-control" placeholder="1234 abc st." required [(ngModel)]="colegioModel.id" #opCarrier="ngModel" name="id">
-                              <small class="text-danger" *ngIf=errAddress1>Please Enter A Valid ID</small>
-                            </div>
-                            <div class="col-md-2 mb-3">
-                              <label for="startDate">Fecha inicio</label>
-                              <input type="text" class="form-control" placeholder="1234 abc st." required [(ngModel)]="colegioModel.startDate" #opCarrier="ngModel" name="startDate">
-                              <small class="text-danger" *ngIf=errAddress1>Please Enter A Valid Date</small>
-                            </div>
-                            <div class="col-md-2 mb-3">
-                              <label for="endDate">Fecha fin</label>
-                              <input type="text" class="form-control" placeholder="Apt 4" required [(ngModel)]="colegioModel.endDate" #opCarrier="ngModel" name="endDate">
-                              <small class="text-danger" *ngIf=errAddress2>Please Enter A Valid Date</small>
-                            </div>
-                            <div class="col-md-2 mb-3" style="margin-top:35px; margin-left:15px;">
-                              <button class="btn btn-primary btn-sm" type="submit" (click)="submitData(0)">SUBMIT DATA</button>
-                            </div>
-                          </div>
-                        </div>
-                        </div>
-
-
-                        <div class="card shadow mb-3">
-                                        <div class="card-header py-3">
-                                            <p class="text-primary m-0 font-weight-bold">Mesa</p>
-                                        </div>
-                                        <div class="card-body">
-                    <div class="form-row" style="margin-bottom:0px;">
-                            <div class="col-md-2 mb-3">
-                             <label for="first_name"><strong>Colegio</strong></label>
-                                                            <select class="form-control" required [(ngModel)]="mesaModel.colegioId" #opCarrier="ngModel" name="colegioId">
-                                                              <option> Selecciona Colegio</option>
-                                                            </select>
-                                                            <small
-                                                                class="text-danger" *ngIf=errBldgType>Please Choose An Option</small>
-                            </div>
-                            <div class="col-md-2 mb-3">
-                              <div class="form-group"><label for="username">
-                                <strong>Votos Vacios</strong>
-                              </label>
-                                                            <input class="form-control" type="text" placeholder="LotArea"  required [(ngModel)]="mesaModel.votosVacios" #opCarrier="ngModel" name="votosVacios">
-                                                            <small class="text-danger" *ngIf=errLotArea>Please Enter A Valid Number</small></div>
-                            </div>
-                            <div class="col-md-2 mb-3">
-                              <div class="form-group"><label for="username">
-                                <strong>Votos Nulos</strong>
-                              </label>
-                                                            <input class="form-control" type="text" placeholder="LotArea"  required [(ngModel)]="mesaModel.votosNulos" #opCarrier="ngModel" name="votosNulos">
-                                                            <small class="text-danger" *ngIf=errLotArea>Please Enter A Valid Number</small></div>
-                            </div>
-                            <div class="col-md-2 mb-3" style="margin-top:35px; margin-left:15px;">
-                              <button class="btn btn-primary btn-sm" type="submit" (click)=submitData(1)>SUBMIT DATA</button>
-                            </div>
-                          </div>
-                        </div>
-                        </div>
-
-                        <div class="card shadow mb-3">
-                                        <div class="card-header py-3">
-                                            <p class="text-primary m-0 font-weight-bold">Partido</p>
-                                        </div>
-                                        <div class="card-body">
-                    <div class="form-row" style="margin-bottom:0px;">
-                            <div class="col-md-2 mb-3">
-                              <div class="form-group">
-                                <label for="username"><strong>Siglas</strong></label><input class="form-control" type="text" placeholder="Full Bath" required [(ngModel)]="partidoModel.siglas" #opCarrier="ngModel" name="siglas"><small class="text-danger" *ngIf=errFullBath>Please Enter A Valid Number</small></div>
-                            </div>
-                            <div class="col-md-2 mb-3">
-                             <label for="username"><strong>Nombre</strong></label><input class="form-control" type="text" placeholder="Half Bath" required [(ngModel)]="partidoModel.nombre" #opCarrier="ngModel" name="halfBath"><small class="text-danger" *ngIf=errHalfBath>Please Enter A Valid Number</small>
-                            </div>
-                            <div class="col-md-2 mb-3">
-                            <label for="username"><strong>Presidente</strong></label><input class="form-control" type="text" placeholder="Bedroom Above Ground" required [(ngModel)]="partidoModel.presidente" #opCarrier="ngModel" name="presidente"><small class="text-danger" *ngIf=errBedroomAbvGr>Please Enter A Valid Number</small>
-                            </div>
-                            <div class="col-md-2 mb-3" style="margin-top:35px; margin-left:15px;">
-                              <button class="btn btn-primary btn-sm" type="submit" (click)=submitData(2)>SUBMIT DATA</button>
-                            </div>
-                          </div>
-                        </div>
-                        </div>
-
-                        <div class="card shadow mb-3">
-                                        <div class="card-header py-3">
-                                            <p class="text-primary m-0 font-weight-bold">Votante</p>
-                                        </div>
-                                        <div class="card-body">
-                    <div class="form-row" style="margin-bottom:0px;">
-                            <div class="col-md-2 mb-3">
-                              <div class="form-group">
-                              <label for="email"><strong>INE</strong></label><input class="form-control" type="email" placeholder="Total Rooms AbvGr" required [(ngModel)]="votanteModel.ine" #opCarrier="ngModel" name="ine"><small class="text-danger" *ngIf=errTotRmsAbvGrd>Please Enter A Valid Number</small></div>
-                            </div>
-                            <div class="col-md-2 mb-3">
-                              <div class="form-group">
-                              <label for="email"><strong>Nombre</strong></label><input class="form-control" type="email" placeholder="Total Rooms AbvGr" required [(ngModel)]="votanteModel.nombre" #opCarrier="ngModel" name="nombre"><small class="text-danger" *ngIf=errTotRmsAbvGrd>Please Enter A Valid Number</small></div>
-                            </div>
-                            <div class="col-md-2 mb-3">
-                              <div class="form-group">
-                              <label for="email"><strong>Fecha de nacimiento</strong></label><input class="form-control" type="email" placeholder="Total Rooms AbvGr" required [(ngModel)]="votanteModel.nacimiento" #opCarrier="ngModel" name="nacimiento"><small class="text-danger" *ngIf=errTotRmsAbvGrd>Please Enter A Valid Number</small></div>
-                            </div>
-                            <div class="col-md-2 mb-3">
-                              <div class="form-group">
-                              <label for="email"><strong>Direccion</strong></label><input class="form-control" type="email" placeholder="Total Rooms AbvGr" required [(ngModel)]="votanteModel.direccion" #opCarrier="ngModel" name="direccion"><small class="text-danger" *ngIf=errTotRmsAbvGrd>Please Enter A Valid Number</small></div>
-                            </div>
-                            <div class="col-md-2 mb-3">
-                              <label for="first_name"><strong>Mesa</strong></label>
-                                                             <select class="form-control" required [(ngModel)]="votanteModel.mesaId" #opCarrier="ngModel" name="mesaId">
-                                                               <option> Selecciona Mesa</option>
-                                                             </select>
-                                                             <small
-                                                                 class="text-danger" *ngIf=errBldgType>Please Choose An Option</small>
-                             </div>
-                             <div class="col-md-2 mb-3">
-                              <label for="first_name"><strong>Partido</strong></label>
-                                                             <select class="form-control" required [(ngModel)]="votanteModel.partidoId" #opCarrier="ngModel" name="partidoId">
-                                                               <option> Selecciona Partido</option>
-                                                             </select>
-                                                             <small
-                                                                 class="text-danger" *ngIf=errBldgType>Please Choose An Option</small>
-                             </div>
-                             <div class="col-md-2 mb-3" style="margin-top:35px; margin-left:15px;">
-                              <button class="btn btn-primary btn-sm" type="submit" (click)=submitData(3)>SUBMIT DATA</button>
-                            </div>
-
-                          </div>
-                        </div>
-                        </div>
-
-                        <div class="card shadow mb-3">
-                                        <div class="card-header py-3">
-                                            <p class="text-primary m-0 font-weight-bold">Votos Municipales</p>
-                                        </div>
-                                        <div class="card-body">
-                    <div class="form-row" style="margin-bottom:0px;">
-                      <div class="col-md-2 mb-3">
-                        <label for="first_name"><strong>Mesa</strong></label>
-                                                       <select class="form-control" required [(ngModel)]="municipalModel.mesaId" #opCarrier="ngModel" name="mesaId">
-                                                         <option> Selecciona Mesa</option>
-                                                       </select>
-                                                       <small
-                                                           class="text-danger" *ngIf=errBldgType>Please Choose An Option</small>
-                       </div>
-                       <div class="col-md-2 mb-3">
-                        <label for="first_name"><strong>Partido</strong></label>
-                                                       <select class="form-control" required [(ngModel)]="municipalModel.partidoId" #opCarrier="ngModel" name="partidoId">
-                                                         <option> Selecciona Partido</option>
-                                                       </select>
-                                                       <small
-                                                           class="text-danger" *ngIf=errBldgType>Please Choose An Option</small>
-                       </div>
-                       <div class="col-md-2 mb-3">
-                        <div class="form-group">
-                        <label for="email"><strong>Numero de Votos</strong></label><input class="form-control" type="email" placeholder="Total Rooms AbvGr" required [(ngModel)]="municipalModel.numVotos" #opCarrier="ngModel" name="numVotos"><small class="text-danger" *ngIf=errTotRmsAbvGrd>Please Enter A Valid Number</small></div>
-                      </div>
-                      <div class="col-md-2 mb-3" style="margin-top:35px; margin-left:15px;">
-                        <button class="btn btn-primary btn-sm" type="submit" (click)=submitData(4)>SUBMIT DATA</button>
-                      </div>
-                          </div>
-                        </div>
-                        </div>
+          <div class="card shadow mb-3">
+            <div class="card-header py-3">
+              <p class="text-primary m-0 font-weight-bold">Colegio</p>
+            </div>
+            <div class="card-body">
+              <div class="form-row" style="margin-bottom:0px;">
+                <div class="col-md-2 mb-3">
+                  <label for="id">ID</label>
+                  <input type="text" class="form-control" placeholder="1234 abc st." required
+                    [(ngModel)]="colegioModel.id" #opCarrier="ngModel" name="id">
+                  <small class="text-danger" *ngIf=errAddress1>Please Enter A Valid ID</small>
+                </div>
+                <div class="col-md-2 mb-3">
+                  <label for="startDate">Fecha inicio</label>
+                  <input type="text" class="form-control" placeholder="1234 abc st." required
+                    [(ngModel)]="colegioModel.startDate" #opCarrier="ngModel" name="startDate">
+                  <small class="text-danger" *ngIf=errAddress1>Please Enter A Valid Date</small>
+                </div>
+                <div class="col-md-2 mb-3">
+                  <label for="endDate">Fecha fin</label>
+                  <input type="text" class="form-control" placeholder="Apt 4" required
+                    [(ngModel)]="colegioModel.endDate" #opCarrier="ngModel" name="endDate">
+                  <small class="text-danger" *ngIf=errAddress2>Please Enter A Valid Date</small>
+                </div>
+                <div class="col-md-2 mb-3" style="margin-top:35px; margin-left:15px;">
+                  <button class="btn btn-primary btn-sm" type="submit" (click)="submitData(0)">SUBMIT DATA</button>
+                </div>
+              </div>
+            </div>
+          </div>
 
 
-                        <div class="card shadow mb-3">
-                                        <div class="card-header py-3">
-                                            <p class="text-primary m-0 font-weight-bold">Votos Federales</p>
-                                        </div>
-                                        <div class="card-body">
-                    <div class="form-row" style="margin-bottom:0px;">
-                      <div class="col-md-2 mb-3">
-                        <label for="first_name"><strong>Mesa</strong></label>
-                                                       <select class="form-control" required [(ngModel)]="federalModel.mesaId" #opCarrier="ngModel" name="mesaId">
-                                                         <option> Selecciona Mesa</option>
-                                                       </select>
-                                                       <small
-                                                           class="text-danger" *ngIf=errBldgType>Please Choose An Option</small>
-                       </div>
-                       <div class="col-md-2 mb-3">
-                        <label for="first_name"><strong>Partido</strong></label>
-                                                       <select class="form-control" required [(ngModel)]="federalModel.partidoId" #opCarrier="ngModel" name="partidoId">
-                                                         <option> Selecciona Partido</option>
-                                                       </select>
-                                                       <small
-                                                           class="text-danger" *ngIf=errBldgType>Please Choose An Option</small>
-                       </div>
-                       <div class="col-md-2 mb-3">
-                        <div class="form-group">
-                        <label for="email"><strong>Numero de Votos</strong></label><input class="form-control" type="email" placeholder="Total Rooms AbvGr" required [(ngModel)]="federalModel.numVotos" #opCarrier="ngModel" name="numVotos"><small class="text-danger" *ngIf=errTotRmsAbvGrd>Please Enter A Valid Number</small></div>
-                      </div>
-                      <div class="col-md-2 mb-3" style="margin-top:35px; margin-left:15px;">
-                        <button class="btn btn-primary btn-sm" type="submit" (click)=submitData(5)>SUBMIT DATA</button>
-                      </div>
-                          </div>
-                        </div>
-                        </div>
-</div></div>
+          <div class="card shadow mb-3">
+            <div class="card-header py-3">
+              <p class="text-primary m-0 font-weight-bold">Mesa</p>
+            </div>
+            <div class="card-body">
+              <div class="form-row" style="margin-bottom:0px;">
+                <div class="col-md-2 mb-3">
+                  <label for="first_name"><strong>Colegio</strong></label>
+                  <select class="form-control" required [(ngModel)]="mesaModel.colegioId" #opCarrier="ngModel"
+                    name="colegioId">
+                    <option> Selecciona Colegio</option>
+                  </select>
+                  <small class="text-danger" *ngIf=errBldgType>Please Choose An Option</small>
+                </div>
+                <div class="col-md-2 mb-3">
+                  <div class="form-group"><label for="username">
+                      <strong>Votos Vacios</strong>
+                    </label>
+                    <input class="form-control" type="text" placeholder="LotArea" required
+                      [(ngModel)]="mesaModel.votosVacios" #opCarrier="ngModel" name="votosVacios">
+                    <small class="text-danger" *ngIf=errLotArea>Please Enter A Valid Number</small></div>
+                </div>
+                <div class="col-md-2 mb-3">
+                  <div class="form-group"><label for="username">
+                      <strong>Votos Nulos</strong>
+                    </label>
+                    <input class="form-control" type="text" placeholder="LotArea" required
+                      [(ngModel)]="mesaModel.votosNulos" #opCarrier="ngModel" name="votosNulos">
+                    <small class="text-danger" *ngIf=errLotArea>Please Enter A Valid Number</small></div>
+                </div>
+                <div class="col-md-2 mb-3" style="margin-top:35px; margin-left:15px;">
+                  <button class="btn btn-primary btn-sm" type="submit" (click)=submitData(1)>SUBMIT DATA</button>
+                </div>
+              </div>
+            </div>
+          </div>
 
+          <div class="card shadow mb-3">
+            <div class="card-header py-3">
+              <p class="text-primary m-0 font-weight-bold">Partido</p>
+            </div>
+            <div class="card-body">
+              <div class="form-row" style="margin-bottom:0px;">
+                <div class="col-md-2 mb-3">
+                  <div class="form-group">
+                    <label for="username"><strong>Siglas</strong></label><input class="form-control" type="text"
+                      placeholder="Full Bath" required [(ngModel)]="partidoModel.siglas" #opCarrier="ngModel"
+                      name="siglas"><small class="text-danger" *ngIf=errFullBath>Please Enter A Valid Number</small>
+                  </div>
+                </div>
+                <div class="col-md-2 mb-3">
+                  <label for="username"><strong>Nombre</strong></label><input class="form-control" type="text"
+                    placeholder="Half Bath" required [(ngModel)]="partidoModel.nombre" #opCarrier="ngModel"
+                    name="halfBath"><small class="text-danger" *ngIf=errHalfBath>Please Enter A Valid Number</small>
+                </div>
+                <div class="col-md-2 mb-3">
+                  <label for="username"><strong>Presidente</strong></label><input class="form-control" type="text"
+                    placeholder="Bedroom Above Ground" required [(ngModel)]="partidoModel.presidente"
+                    #opCarrier="ngModel" name="presidente"><small class="text-danger" *ngIf=errBedroomAbvGr>Please Enter
+                    A Valid Number</small>
+                </div>
+                <div class="col-md-2 mb-3" style="margin-top:35px; margin-left:15px;">
+                  <button class="btn btn-primary btn-sm" type="submit" (click)=submitData(2)>SUBMIT DATA</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card shadow mb-3">
+            <div class="card-header py-3">
+              <p class="text-primary m-0 font-weight-bold">Votante</p>
+            </div>
+            <div class="card-body">
+              <div class="form-row" style="margin-bottom:0px;">
+                <div class="col-md-2 mb-3">
+                  <div class="form-group">
+                    <label for="email"><strong>INE</strong></label><input class="form-control" type="email"
+                      placeholder="Total Rooms AbvGr" required [(ngModel)]="votanteModel.ine" #opCarrier="ngModel"
+                      name="ine"><small class="text-danger" *ngIf=errTotRmsAbvGrd>Please Enter A Valid Number</small>
+                  </div>
+                </div>
+                <div class="col-md-2 mb-3">
+                  <div class="form-group">
+                    <label for="email"><strong>Nombre</strong></label><input class="form-control" type="email"
+                      placeholder="Total Rooms AbvGr" required [(ngModel)]="votanteModel.nombre" #opCarrier="ngModel"
+                      name="nombre"><small class="text-danger" *ngIf=errTotRmsAbvGrd>Please Enter A Valid Number</small>
+                  </div>
+                </div>
+                <div class="col-md-2 mb-3">
+                  <div class="form-group">
+                    <label for="email"><strong>Fecha de nacimiento</strong></label><input class="form-control"
+                      type="email" placeholder="Total Rooms AbvGr" required [(ngModel)]="votanteModel.nacimiento"
+                      #opCarrier="ngModel" name="nacimiento"><small class="text-danger" *ngIf=errTotRmsAbvGrd>Please
+                      Enter A Valid Number</small></div>
+                </div>
+                <div class="col-md-2 mb-3">
+                  <div class="form-group">
+                    <label for="email"><strong>Direccion</strong></label><input class="form-control" type="email"
+                      placeholder="Total Rooms AbvGr" required [(ngModel)]="votanteModel.direccion" #opCarrier="ngModel"
+                      name="direccion"><small class="text-danger" *ngIf=errTotRmsAbvGrd>Please Enter A Valid
+                      Number</small></div>
+                </div>
+                <div class="col-md-2 mb-3">
+                  <label for="first_name"><strong>Mesa</strong></label>
+                  <select class="form-control" required [(ngModel)]="votanteModel.mesaId" #opCarrier="ngModel"
+                    name="mesaId">
+                    <option> Selecciona Mesa</option>
+                  </select>
+                  <small class="text-danger" *ngIf=errBldgType>Please Choose An Option</small>
+                </div>
+                <div class="col-md-2 mb-3">
+                  <label for="first_name"><strong>Partido</strong></label>
+                  <select class="form-control" required [(ngModel)]="votanteModel.partidoId" #opCarrier="ngModel"
+                    name="partidoId">
+                    <option> Selecciona Partido</option>
+                  </select>
+                  <small class="text-danger" *ngIf=errBldgType>Please Choose An Option</small>
+                </div>
+                <div class="col-md-2 mb-3" style="margin-top:35px; margin-left:15px;">
+                  <button class="btn btn-primary btn-sm" type="submit" (click)=submitData(3)>SUBMIT DATA</button>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card shadow mb-3">
+            <div class="card-header py-3">
+              <p class="text-primary m-0 font-weight-bold">Votos Municipales</p>
+            </div>
+            <div class="card-body">
+              <div class="form-row" style="margin-bottom:0px;">
+                <div class="col-md-2 mb-3">
+                  <label for="first_name"><strong>Mesa</strong></label>
+                  <select class="form-control" required [(ngModel)]="municipalModel.mesaId" #opCarrier="ngModel"
+                    name="mesaId">
+                    <option> Selecciona Mesa</option>
+                  </select>
+                  <small class="text-danger" *ngIf=errBldgType>Please Choose An Option</small>
+                </div>
+                <div class="col-md-2 mb-3">
+                  <label for="first_name"><strong>Partido</strong></label>
+                  <select class="form-control" required [(ngModel)]="municipalModel.partidoId" #opCarrier="ngModel"
+                    name="partidoId">
+                    <option> Selecciona Partido</option>
+                  </select>
+                  <small class="text-danger" *ngIf=errBldgType>Please Choose An Option</small>
+                </div>
+                <div class="col-md-2 mb-3">
+                  <div class="form-group">
+                    <label for="email"><strong>Numero de Votos</strong></label><input class="form-control" type="email"
+                      placeholder="Total Rooms AbvGr" required [(ngModel)]="municipalModel.numVotos"
+                      #opCarrier="ngModel" name="numVotos"><small class="text-danger" *ngIf=errTotRmsAbvGrd>Please Enter
+                      A Valid Number</small></div>
+                </div>
+                <div class="col-md-2 mb-3" style="margin-top:35px; margin-left:15px;">
+                  <button class="btn btn-primary btn-sm" type="submit" (click)=submitData(4)>SUBMIT DATA</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="card shadow mb-3">
+            <div class="card-header py-3">
+              <p class="text-primary m-0 font-weight-bold">Votos Federales</p>
+            </div>
+            <div class="card-body">
+              <div class="form-row" style="margin-bottom:0px;">
+                <div class="col-md-2 mb-3">
+                  <label for="first_name"><strong>Mesa</strong></label>
+                  <select class="form-control" required [(ngModel)]="federalModel.mesaId" #opCarrier="ngModel"
+                    name="mesaId">
+                    <option> Selecciona Mesa</option>
+                  </select>
+                  <small class="text-danger" *ngIf=errBldgType>Please Choose An Option</small>
+                </div>
+                <div class="col-md-2 mb-3">
+                  <label for="first_name"><strong>Partido</strong></label>
+                  <select class="form-control" required [(ngModel)]="federalModel.partidoId" #opCarrier="ngModel"
+                    name="partidoId">
+                    <option> Selecciona Partido</option>
+                  </select>
+                  <small class="text-danger" *ngIf=errBldgType>Please Choose An Option</small>
+                </div>
+                <div class="col-md-2 mb-3">
+                  <div class="form-group">
+                    <label for="email"><strong>Numero de Votos</strong></label><input class="form-control" type="email"
+                      placeholder="Total Rooms AbvGr" required [(ngModel)]="federalModel.numVotos" #opCarrier="ngModel"
+                      name="numVotos"><small class="text-danger" *ngIf=errTotRmsAbvGrd>Please Enter A Valid
+                      Number</small></div>
+                </div>
+                <div class="col-md-2 mb-3" style="margin-top:35px; margin-left:15px;">
+                  <button class="btn btn-primary btn-sm" type="submit" (click)=submitData(5)>SUBMIT DATA</button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
+
     </div>
+  </div>
 </div>

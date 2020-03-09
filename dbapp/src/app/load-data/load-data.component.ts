@@ -2,8 +2,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpService }  from '../http.service';
-import { HouseInfo } from '../models/house-info';
-import { AddressInfo } from '../models/address-info';
 import { ColegioInfo } from '../models/colegio-info';
 import { FederalInfo } from '../models/federal-info';
 import { MesaInfo } from '../models/mesa-info';

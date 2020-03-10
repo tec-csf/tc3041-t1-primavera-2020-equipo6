@@ -54,6 +54,7 @@ A continuación aparecen descritos los diferentes elementos que forman parte de 
 
 ### 2.1 Modelo de la *base de datos* 
 https://www.lucidchart.com/invitations/accept/100f313d-7118-4d3c-be17-27a5cb181f71
+[Modelo EER](https://github.com/tec-csf/tc3041-t1-primavera-2020-equipo6/tree/SQL_Atemporal/database/EER)
 
 *[Incluya aquí el Diagrama Entidad-Relación Extendido y explique las jerarquías modeladas así como las restricciones existentes*
 

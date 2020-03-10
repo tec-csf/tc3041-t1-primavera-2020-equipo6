@@ -1,0 +1,76 @@
+//Comandos para generar la base de datos. Equipo 6
+
+//DB2 COMMANDS
+// COLEGIO
+
+CREATE TABLE COLEGIO (id INTEGER NOT NULL, start_date DATE NOT NULL, end_date DATE NOT NULL, sys_start TIMESTAMP(12) NOT NULL GENERATED ALWAYS AS ROW BEGIN, SYS_END TIMESTAMP(12) NOT NULL GENERATED ALWAYS AS ROW END, create_id timestamp(12) generated always as transaction start id, PERIOD BUSINESS_TIME(start_date, end_date), PERIOD SYSTEM_TIME(SYS_START, SYS_END), PRIMARY KEY (ID))
+
+CREATE TABLE HIST_COLEGIO like colegio
+alter table colegio add versioning use history table hist_colegio
+
+CREATE UNIQUE INDEX index_COLEGIO ON Colegio(id, BUSINESS_TIME WITHOUT OVERLAPS)
+
+//MESA B / S
+
+CREATE TABLE MESA (id INTEGER NOT NULL, COLEGIO_id INTEGER NOT NULL, LETRA VARCHAR(1) NOT NULL, votos_vacios INTEGER NOT NULL, votos_nulos INTEGER NOT NULL, sys_start TIMESTAMP(12) NOT NULL GENERATED ALWAYS AS ROW BEGIN, SYS_END TIMESTAMP(12) NOT NULL GENERATED ALWAYS AS ROW END, create_id timestamp(12) generated always as transaction start id, PERIOD SYSTEM_TIME(SYS_START, SYS_END), PRIMARY KEY (id), FOREIGN KEY(COLEGIO_id) REFERENCES COLEGIO(ID))
+
+create table hist_mesa like mesa
+
+alter table mesa add versioning use history table hist_mesa
+
+//VOTANTE S
+
+CREATE TABLE VOTANTE (ine_pasaporte VARCHAR(45) NOT NULL, nombre VARCHAR(45) NOT NULL, nacimiento DATE NOT NULL, direccion VARCHAR(100) NOT NULL, mesa_id INTEGER NOT NULL, partido_siglas VARCHAR(10) NOT NULL, apoderado BOOLEAN NOT NULL, mexicano BOOLEAN NOT NULL, municipal_federal boolean not NULL, sys_start TIMESTAMP(12) NOT NULL GENERATED ALWAYS AS ROW BEGIN, SYS_END TIMESTAMP(12) NOT NULL GENERATED ALWAYS AS ROW END, create_id timestamp(12) generated always as transaction start id, PERIOD SYSTEM_TIME(SYS_START, SYS_END), PRIMARY KEY(ine_pasaporte, mesa_id, partido_siglas), FOREIGN KEY (partido_siglas) REFERENCES PARTIDO(siglas), FOREIGN KEY (mesa_id) REFERENCES MESA(id))
+
+create table hist_votante like votante
+
+alter table votante add versioning use history table hist_votante
+
+
+//PARTIDO S
+
+CREATE TABLE PARTIDO (siglas VARCHAR(10) NOT NULL, nombre VARCHAR(45) NOT NULL, nombre_presidente VARCHAR(45) NOT NULL, sys_start TIMESTAMP(12) NOT NULL GENERATED ALWAYS AS ROW BEGIN, SYS_END TIMESTAMP(12) NOT NULL GENERATED ALWAYS AS ROW END, create_id timestamp(12) generated always as transaction start id, PERIOD SYSTEM_TIME(SYS_START, SYS_END), PRIMARY KEY(siglas))
+
+create table hist_partido like Partido
+
+alter table partido add versioning use history table hist_partido
+
+//LISTA NOMINAL B/S
+
+CREATE TABLE LISTA_NOMINAL (INE VARCHAR(45) NOT NULL, NOMBRE VARCHAR(45) NOT NULL, PARTIDO_SIGLAS VARCHAR(10) NOT NULL, ORDEN INTEGER NOT NULL, START_DATE TIMESTAMP(6) NOT NULL, END_DATE TIMESTAMP(6) NOT NULL, sys_start TIMESTAMP(12) NOT NULL GENERATED ALWAYS AS ROW BEGIN, SYS_END TIMESTAMP(12) NOT NULL GENERATED ALWAYS AS ROW END, create_id timestamp(12) generated always as transaction start id, PERIOD BUSINESS_TIME(START_DATE, END_DATE), PERIOD SYSTEM_TIME(SYS_START, SYS_END), PRIMARY KEY (INE), FOREIGN KEY (PARTIDO_SIGLAS) REFERENCES PARTIDO(SIGLAS))
+create table hist_nominal like lista_nominal
+alter table lista_nominal add versioning use history table hist_nominal
+CREATE UNIQUE INDEX index_nominal ON lista_nominal(INE, BUSINESS_TIME WITHOUT OVERLAPS)
+
+//SUPLENTE B/S
+
+CREATE TABLE SUPLENTE (SUPLENTE_INE VARCHAR(45) NOT NULL, VOTANTE_MESA_ID INTEGER NOT NULL, VOTANTE_PARTIDO_SIGLAS VARCHAR(10) NOT NULL, start_date DATE NOT NULL, end_date DATE NOT NULL, sys_start TIMESTAMP(12) NOT NULL GENERATED ALWAYS AS ROW BEGIN, SYS_END TIMESTAMP(12) NOT NULL GENERATED ALWAYS AS ROW END, create_id timestamp(12) generated always as transaction start id, PERIOD BUSINESS_TIME(start_date, end_date), period  SYSTEM_TIME(SYS_START, SYS_END), PRIMARY KEY(SUPLENTE_INE), FOREIGN KEY (SUPLENTE_INE, VOTANTE_MESA_ID, VOTANTE_PARTIDO_SIGLAS) REFERENCES VOTANTE(INE_PASAPORTE, MESA_ID, PARTIDO_SIGLAS))
+create table hist_suplente like suplente
+alter table suplente add versioning use history table hist_suplente
+CREATE UNIQUE INDEX index_period_SUPLENTE ON SUPLENTE(SUPLENTE_INE, BUSINESS_TIME WITHOUT OVERLAPS)
+
+//MIEMBRO B /S
+
+CREATE TABLE MIEMBRO (VOTANTE_INE VARCHAR(45) NOT NULL, VOTANTE_MESA_ID INTEGER NOT NULL, VOTANTE_PARTIDO_SIGLAS VARCHAR(10) NOT NULL, PRESIDENTE_VOCAL BOOLEAN NOT NULL, SUPLENTE_INE VARCHAR(45) NOT NULL, start_date DATE NOT NULL, end_date DATE NOT NULL, sys_start TIMESTAMP(12) NOT NULL GENERATED ALWAYS AS ROW BEGIN, SYS_END TIMESTAMP(12) NOT NULL GENERATED ALWAYS AS ROW END, create_id timestamp(12) generated always as transaction start id, PERIOD BUSINESS_TIME(start_date, end_date), period  SYSTEM_TIME(SYS_START, SYS_END), FOREIGN KEY (VOTANTE_INE, VOTANTE_MESA_ID, VOTANTE_PARTIDO_SIGLAS) REFERENCES VOTANTE(INE_PASAPORTE, MESA_ID, PARTIDO_SIGLAS), FOREIGN KEY (SUPLENTE_INE) REFERENCES SUPLENTE(SUPLENTE_INE))
+Create table hist_miembro like miembro
+alter table miembro add versioning use history table hist_miembro
+
+CREATE UNIQUE INDEX index_period_MIEMBRO ON MIEMBRO(VOTANTE_INE, BUSINESS_TIME WITHOUT OVERLAPS)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+	

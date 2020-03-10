@@ -89,4 +89,7 @@ https://www.lucidchart.com/invitations/accept/100f313d-7118-4d3c-be17-27a5cb181f
 ### Pagina principal de IBM/DB2 para consulta de todos los comandos.
 https://www.ibm.com/support/producthub/db2/
 
+### Pagina para generar datos aleatorios para llenar la base de datos.
+https://www.generatedata.com/#t1
+
 *[Incluya aquí las referencias a sitios de interés, datasets y cualquier otra información que haya utilizado para realizar la tarea y que le puedan ser de utilidad a otras personas que quieran usarlo como referencia]*

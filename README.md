@@ -54,13 +54,16 @@ A continuación aparecen descritos los diferentes elementos que forman parte de 
 
 ### 2.1 Modelo de la *base de datos* 
 https://www.lucidchart.com/invitations/accept/100f313d-7118-4d3c-be17-27a5cb181f71
-[Modelo EER](https://github.com/tec-csf/tc3041-t1-primavera-2020-equipo6/tree/SQL_Atemporal/database/EER)
+
+[Modelo EER](https://github.com/tec-csf/tc3041-t1-primavera-2020-equipo6/blob/SQL_Atemporal/database/EER.png)
 
 *[Incluya aquí el Diagrama Entidad-Relación Extendido y explique las jerarquías modeladas así como las restricciones existentes*
 
 ### 2.2 Arquitectura de la solución
 
 *[Incluya aquí un diagrama donde se aprecie la arquitectura de la solución propuesta, así como la interacción entre los diferentes componentes de la misma.]*
+
+[Modelo UML](https://github.com/tec-csf/tc3041-t1-primavera-2020-equipo6/blob/SQL_Atemporal/database/UML.png)
 
 ### 2.3 Frontend
 

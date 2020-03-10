@@ -58,7 +58,7 @@ https://www.lucidchart.com/invitations/accept/100f313d-7118-4d3c-be17-27a5cb181f
 *[Incluya aquí el Diagrama Entidad-Relación Extendido y explique las jerarquías modeladas así como las restricciones existentes*
 
 ### 2.2 Arquitectura de la solución
-
+![Diagrama](https://gyazo.com/dd1a1f0c454012e9f9e412178a50da88)
 *[Incluya aquí un diagrama donde se aprecie la arquitectura de la solución propuesta, así como la interacción entre los diferentes componentes de la misma.]*
 
 ### 2.3 Frontend

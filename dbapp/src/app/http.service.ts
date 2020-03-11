@@ -36,8 +36,8 @@ export class HttpService {
     return this.http.post(environment.NODE_HOST + '/getUniqueData', { id: id, view:currentView }, this.httpOptions);
   }
 
-  deleteDataFromDatabase(id) {
-    return this.http.post(environment.NODE_HOST + '/deleteData', { id: id }, this.httpOptions);
+  deleteDataFromDatabase(id, currentView) {
+    return this.http.post(environment.NODE_HOST + '/deleteData', { id: id, view:currentView }, this.httpOptions);
   }
 
   updateDataEntry(id, model, currentView) {

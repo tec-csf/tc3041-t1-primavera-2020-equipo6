@@ -73,7 +73,7 @@ export class ViewDataComponent implements OnInit {
 
   deleteData(row:any){
     console.log('Deleting Data...');
-    var dataObs = this._httpService.deleteDataFromDatabase(row['ID']);
+    var dataObs = this._httpService.deleteDataFromDatabase(row, this.currentView);
     dataObs.subscribe(data=>{
       if(data['success'] != 1){
         console.log(data['message']);

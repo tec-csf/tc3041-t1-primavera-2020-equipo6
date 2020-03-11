@@ -204,20 +204,18 @@ app.post('/deleteData', function (request, response) {
     if (err) {
       return response.json({ success: -1, message: err });
     }
-    conn.query("DELETE FROM " + process.env.DB_SCHEMA + ".HOME_SALES WHERE ID=" + request.body.id + ";", function (err, data) {
+    var table = process.env.DB_SCHEMA + "." + getViewName(request.body['view']);
+    var idName = getIds(request.body['view']);
+    var query = "DELETE FROM " + table + " WHERE " + idName + "='" + request.body.id + "';"
+    console.log(query);
+
+    conn.query(query, function (err, data) {
       if (err) {
         return response.json({ success: -2, message: err });
       }
-      else {
-        conn.query(" DELETE FROM " + process.env.DB_SCHEMA + ".HOME_ADDRESS WHERE HOME_ID=" + request.body.id + ";", function (err, data) {
-          if (err) {
-            return response.json({ success: -3, message: err });
-          }
-          conn.close(function () {
-            return response.json({ success: 1, message: 'Data Deleted!' });
-          });
-        });
-      }
+      conn.close(function () {
+        return response.json({ success: 1, message: 'Data Deleted!' });
+      });
     });
   });
 })

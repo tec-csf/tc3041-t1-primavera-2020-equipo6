@@ -60,11 +60,7 @@ https://www.lucidchart.com/invitations/accept/100f313d-7118-4d3c-be17-27a5cb181f
 [Jerarquías] 
 Usamos esta estructura ya que para realizar elecciones ya que se cuenta con un colegio, cada colegio tendra cierto numero de mesas. Las mesas llevaran la cuenta de votos nulos y votos vacios, luego tenemos la tabla de partido la cual se encargará de los datos de sigla, nombre del partido y del presidente. De la tabla partido sale la tabla de lista nominal. También esta la tabla de votantes la cual nos dirá a partir de booleanos si el votante es mexicano, si es apoderado y que tipo de votacion fue si municipal o federal. De esta tabla sale si el votante es miembro o suplente de una mesa.
 
-*[Incluya aquí el Diagrama Entidad-Relación Extendido y explique las jerarquías modeladas así como las restricciones existentes*
-
 ### 2.2 Arquitectura de la solución
-
-*[Incluya aquí un diagrama donde se aprecie la arquitectura de la solución propuesta, así como la interacción entre los diferentes componentes de la misma.]*
 
 [Modelo UML](https://github.com/tec-csf/tc3041-t1-primavera-2020-equipo6/blob/SQL_Atemporal/database/UML.png)
 
@@ -89,5 +85,11 @@ Usamos esta estructura ya que para realizar elecciones ya que se cuenta con un c
 *[Incluya aquí una guía paso a paso para poder utilizar la aplicación, desde la clonación del repositorio hasta el despliegue de la solución en una plataforma en la nube.]*
 
 ## 3. Referencias
+#### Pagina donde creamos el diagrama EER.
+https://www.lucidchart.com/
 
-*[Incluya aquí las referencias a sitios de interés, datasets y cualquier otra información que haya utilizado para realizar la tarea y que le puedan ser de utilidad a otras personas que quieran usarlo como referencia]*
+#### Pagina donde consultamos todos los comandos de DB2.
+https://www.ibm.com/support/producthub/db2/
+
+#### Pagina donde generamos valores aleatorios para insertarlos en la BD.
+https://www.generatedata.com/#t1

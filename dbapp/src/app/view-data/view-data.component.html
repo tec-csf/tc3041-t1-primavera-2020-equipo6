@@ -150,7 +150,7 @@
 													<td>{{item['SIGLAS']}}</td>
 													<td>{{item['NOMBRE']}}</td>
 													<td>{{item['NOMBRE_PRESIDENTE']}}</td>
-													<td><a [routerLink]="['/editData', 'partido', item['ID']]"> <button
+													<td><a [routerLink]="['/editData', 'partido', item['SIGLAS']]"> <button
 																class="btn btn-info btn-sm" type="button">Edit</button> </a></td>
 													<td><button class="btn btn-danger btn-sm" type="button"
 															(click)=deleteData(item)>Delete</button></td>
@@ -199,7 +199,7 @@
 													<td>{{item['APODERADO']}}</td>
 													<td>{{item['MEXICANO']}}</td>
 													<td>{{item['MUNICIPAL_FEDERAL']}}</td>
-													<td><a [routerLink]="['/editData', 'votante', item['ID']]"> <button
+													<td><a [routerLink]="['/editData', 'votante', item['INE_PASAPORTE']]"> <button
 																class="btn btn-info btn-sm" type="button">Edit</button> </a></td>
 													<td><button class="btn btn-danger btn-sm" type="button"
 															(click)=deleteData(item)>Delete</button></td>
@@ -247,7 +247,7 @@
 													<td>{{item['VOTANTE_PARTIDO_SIGLAS']}}</td>
 													<td>{{item['START_DATE']}}</td>
 													<td>{{item['END_DATE']}}</td>
-													<td><a [routerLink]="['/editData', 'suplente', item['ID']]"> <button
+													<td><a [routerLink]="['/editData', 'suplente', item['SUPLENTE_INE']]"> <button
 																class="btn btn-info btn-sm" type="button">Edit</button> </a></td>
 													<td><button class="btn btn-danger btn-sm" type="button"
 															(click)=deleteData(item)>Delete</button></td>
@@ -295,7 +295,7 @@
 													<td>{{item['SUPLENTE_INE']}}</td>
 													<td>{{item['START_DATE']}}</td>
 													<td>{{item['END_DATE']}}</td>
-													<td><a [routerLink]="['/editData', 'miembro', item['ID']]"> <button
+													<td><a [routerLink]="['/editData', 'miembro', item['SUPLENTE_INE']]"> <button
 																class="btn btn-info btn-sm" type="button">Edit</button> </a></td>
 													<td><button class="btn btn-danger btn-sm" type="button"
 															(click)=deleteData(item)>Delete</button></td>
@@ -342,7 +342,7 @@
 													<td>{{item['ORDEN']}}</td>
 													<td>{{item['START_DATE']}}</td>
 													<td>{{item['END_DATE']}}</td>
-													<td><a [routerLink]="['/editData', 'lista', item['ID']]"> <button class="btn btn-info btn-sm"
+													<td><a [routerLink]="['/editData', 'lista', item['INE']]"> <button class="btn btn-info btn-sm"
 																type="button">Edit</button> </a></td>
 													<td><button class="btn btn-danger btn-sm" type="button"
 															(click)=deleteData(item)>Delete</button></td>

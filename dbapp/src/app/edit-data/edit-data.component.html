@@ -45,57 +45,313 @@
 
             <div class="card shadow mb-3" *ngIf=editMesa>
               <div class="card-header py-3">
-                <p class="text-primary m-0 font-weight-bold">General Information</p>
+                <p class="text-primary m-0 font-weight-bold">Mesa</p>
               </div>
               <div class="card-body">
-                <div class="form-row">
+                <div class="form-row" style="margin-bottom:0px;">
                   <div class="col-md-2 mb-3">
-                    <label for="username"><strong>Lot Area</strong></label>
-                    <input class="form-control" type="text" placeholder="LotArea: {{data['LOTAREA']}}" required
-                      [(ngModel)]="model.lotArea" #opCarrier="ngModel" name="lotArea">
-                    <small class="text-danger" *ngIf=errLotArea>Please Enter A Valid Number</small></div>
-                  <div class="col-md-2 mb-3">
-                    <label for="first_name"><strong>Bldg Style</strong></label>
-                    <select class="form-control" required [(ngModel)]="model.bldgType" #opCarrier="ngModel"
-                      name="bldgType">
-
-                      <option> Select BldgType</option>
-                      <option>1Fam</option>
-                      <option>2fmCon</option>
-                      <option>Duplx</option>
-                      <option>TwnhsE</option>
-                      <option>TwnhsI</option>
-
-                    </select> </div>
-                  <div class="col-md-2 mb-3">
-                    <label for="first_name"><strong>House Style</strong></label><select class="form-control" required
-                      [(ngModel)]="model.houseStyle" #opCarrier="ngModel" name="houseStyle">
-                      <option>Select HouseStyle</option>
-                      <option>1Story</option>
-                      <option>1.5Fin</option>
-                      <option>1.5Unf</option>
-                      <option>2Story</option>
-                      <option>2.5Fin</option>
-                      <option>2.5Unf</option>
-                      <option>SFoyer</option>
-                      <option>SLvl</option>
-                    </select> </div>
-                  <div class="col-md-2 mb-3">
-                    <label for="first_name"><strong>Overall Cond</strong></label><input class="form-control" type="text"
-                      placeholder="OverallCond: {{data['OVERALLCOND']}}" required [(ngModel)]="model.overallCond"
-                      #opCarrier="ngModel" name="overallCond"><small class="text-danger" *ngIf=errOverallCond>Please
-                      Enter A Valid Number</small>
-
+                    <div class="form-group"><label for="username">
+                        <strong>ID</strong>
+                      </label>
+                      <input class="form-control" type="text" placeholder="{{data['ID']}}" required
+                        [(ngModel)]="mesaModel.id" #opCarrier="ngModel" name="id">
+                      <small class="text-danger" *ngIf=errLotArea>Please Enter A Valid ID</small></div>
                   </div>
                   <div class="col-md-2 mb-3">
-                    <label for="first_name"><strong>Year Built</strong></label><input class="form-control" type="text"
-                      placeholder="YearBuilt: {{data['YEARBUILT']}}" required [(ngModel)]="model.yearBuilt"
-                      #opCarrier="ngModel" name="yearBuilt"><small class="text-danger" *ngIf=errYearBuilt>Please Enter A
-                      Valid Number</small>
+                    <div class="form-group"><label for="username">
+                        <strong>Colegio</strong>
+                      </label>
+                      <input class="form-control" type="text" placeholder="{{data['COLEGIO_ID']}}" required
+                        [(ngModel)]="mesaModel.colegioId" #opCarrier="ngModel" name="id">
+                      <small class="text-danger" *ngIf=errLotArea>Please Enter A Valid ID</small></div>
+                  </div>
+                  <div class="col-md-2 mb-3">
+                    <div class="form-group"><label for="username">
+                        <strong>Letra</strong>
+                      </label>
+                      <input class="form-control" type="text" placeholder="{{data['LETRA']}}" required
+                        [(ngModel)]="mesaModel.letra" #opCarrier="ngModel" name="id">
+                      <small class="text-danger" *ngIf=errLotArea>Please Enter A Valid letter</small></div>
+                  </div>
+                  <div class="col-md-2 mb-3">
+                    <div class="form-group"><label for="username">
+                        <strong>Votos Vacios</strong>
+                      </label>
+                      <input class="form-control" type="text" placeholder="{{data['VOTOS_VACIOS']}}" required
+                        [(ngModel)]="mesaModel.votosVacios" #opCarrier="ngModel" name="votosVacios">
+                      <small class="text-danger" *ngIf=errLotArea>Please Enter A Valid Number</small></div>
+                  </div>
+                  <div class="col-md-2 mb-3">
+                    <div class="form-group"><label for="username">
+                        <strong>Votos Nulos</strong>
+                      </label>
+                      <input class="form-control" type="text" placeholder="{{data['VOTOS_NULOS']}}" required
+                        [(ngModel)]="mesaModel.votosNulos" #opCarrier="ngModel" name="votosNulos">
+                      <small class="text-danger" *ngIf=errLotArea>Please Enter A Valid Number</small></div>
+                  </div>
+                  <div class="col-md-2 mb-3" style="margin-top:35px; margin-left:15px;">
+                    <button class="btn btn-primary btn-sm" type="submit" (click)=submitData(1)>SUBMIT DATA</button>
                   </div>
                 </div>
               </div>
             </div>
+  
+            <div class="card shadow mb-3" *ngIf=editPartido>
+              <div class="card-header py-3">
+                <p class="text-primary m-0 font-weight-bold">Partido</p>
+              </div>
+              <div class="card-body">
+                <div class="form-row" style="margin-bottom:0px;">
+                  <div class="col-md-2 mb-3">
+                    <div class="form-group">
+                      <label for="username"><strong>Siglas</strong></label><input class="form-control" type="text"
+                        placeholder="{{data['SIGLAS']}}" required [(ngModel)]="partidoModel.siglas" #opCarrier="ngModel"
+                        name="siglas"><small class="text-danger" *ngIf=errFullBath>Please Enter A Valid Number</small>
+                    </div>
+                  </div>
+                  <div class="col-md-2 mb-3">
+                    <label for="username"><strong>Nombre</strong></label><input class="form-control" type="text"
+                      placeholder="{{data['NOMBRE']}}" required [(ngModel)]="partidoModel.nombre" #opCarrier="ngModel"
+                      name="halfBath"><small class="text-danger" *ngIf=errHalfBath>Please Enter A Valid Number</small>
+                  </div>
+                  <div class="col-md-2 mb-3">
+                    <label for="username"><strong>Presidente</strong></label><input class="form-control" type="text"
+                      placeholder="{{data['NOMBRE_PRESIDENTE']}}" required [(ngModel)]="partidoModel.presidente"
+                      #opCarrier="ngModel" name="presidente"><small class="text-danger" *ngIf=errBedroomAbvGr>Please Enter
+                      A Valid Number</small>
+                  </div>
+                  <div class="col-md-2 mb-3" style="margin-top:35px; margin-left:15px;">
+                    <button class="btn btn-primary btn-sm" type="submit" (click)=submitData(2)>SUBMIT DATA</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+            <div class="card shadow mb-3" *ngIf=editVotante>
+              <div class="card-header py-3">
+                <p class="text-primary m-0 font-weight-bold">Votante</p>
+              </div>
+              <div class="card-body">
+                <div class="form-row" style="margin-bottom:0px;">
+                  <div class="col-md-2 mb-3">
+                    <div class="form-group">
+                      <label for="email"><strong>INE</strong></label><input class="form-control" type="email"
+                        placeholder="{{data['INE_PASAPORTE']}}" required [(ngModel)]="votanteModel.ine" #opCarrier="ngModel"
+                        name="ine"><small class="text-danger" *ngIf=errTotRmsAbvGrd>Please Enter A Valid Number</small>
+                    </div>
+                  </div>
+                  <div class="col-md-2 mb-3">
+                    <div class="form-group">
+                      <label for="email"><strong>Nombre</strong></label><input class="form-control" type="email"
+                        placeholder="{{data['NOMBRE']}}" required [(ngModel)]="votanteModel.nombre" #opCarrier="ngModel"
+                        name="nombre"><small class="text-danger" *ngIf=errTotRmsAbvGrd>Please Enter A Valid Number</small>
+                    </div>
+                  </div>
+                  <div class="col-md-2 mb-3">
+                    <div class="form-group">
+                      <label for="email"><strong>Fecha de nacimiento</strong></label><input class="form-control"
+                        type="email" placeholder="{{data['NACIMIENTO']}}" required [(ngModel)]="votanteModel.nacimiento"
+                        #opCarrier="ngModel" name="nacimiento"><small class="text-danger" *ngIf=errTotRmsAbvGrd>Please
+                        Enter A Valid Number</small></div>
+                  </div>
+                  <div class="col-md-2 mb-3">
+                    <div class="form-group">
+                      <label for="email"><strong>Direccion</strong></label><input class="form-control" type="email"
+                        placeholder="{{data['DIRECCION']}}" required [(ngModel)]="votanteModel.direccion" #opCarrier="ngModel"
+                        name="direccion"><small class="text-danger" *ngIf=errTotRmsAbvGrd>Please Enter A Valid
+                        Number</small></div>
+                  </div>
+                  <div class="col-md-2 mb-3">
+                    <div class="form-group">
+                      <label for="email"><strong>Mesa</strong></label><input class="form-control" type="email"
+                        placeholder="{{data['MESA_ID']}}" required [(ngModel)]="votanteModel.mesaId" #opCarrier="ngModel"
+                        name="mesa"><small class="text-danger" *ngIf=errTotRmsAbvGrd>Please Enter A Valid
+                        Number</small></div>
+                  </div>
+                  <div class="col-md-2 mb-3">
+                    <div class="form-group">
+                      <label for="email"><strong>Partido</strong></label><input class="form-control" type="email"
+                        placeholder="{{data['PARTIDO_SIGLAS']}}" required [(ngModel)]="votanteModel.partidoId" #opCarrier="ngModel"
+                        name="partido"><small class="text-danger" *ngIf=errTotRmsAbvGrd>Please Enter A Valid
+                        Number</small></div>
+                  </div>
+                  <div class="col-md-2 mb-3">
+                    <div class="form-group">
+                      <label for="email"><strong>Apoderado</strong></label><input class="form-control" type="checkbox"
+                        placeholder="{{data['APODERADO']}}" required [(ngModel)]="votanteModel.apoderado" #opCarrier="ngModel"
+                        name="nombre"><small class="text-danger" *ngIf=errTotRmsAbvGrd>Please Enter A Valid Number</small>
+                    </div>
+                  </div>
+                  <div class="col-md-2 mb-3">
+                    <div class="form-group">
+                      <label for="email"><strong>Mexicano</strong></label><input class="form-control" type="checkbox"
+                        placeholder="{{data['MEXICANO']}}" required [(ngModel)]="votanteModel.mexicano" #opCarrier="ngModel"
+                        name="nombre"><small class="text-danger" *ngIf=errTotRmsAbvGrd>Please Enter A Valid Number</small>
+                    </div>
+                  </div>
+                  <div class="col-md-2 mb-3">
+                    <div class="form-group">
+                      <label for="email"><strong>Municipal/Federal</strong></label><input class="form-control" type="checkbox"
+                        placeholder="{{data['MUNICIPAL_FEDERAL']}}" required [(ngModel)]="votanteModel.municipal_federal" #opCarrier="ngModel"
+                        name="nombre"><small class="text-danger" *ngIf=errTotRmsAbvGrd>Please Enter A Valid Number</small>
+                    </div>
+                  </div>
+                  <div class="col-md-2 mb-3" style="margin-top:35px; margin-left:15px;">
+                    <button class="btn btn-primary btn-sm" type="submit" (click)=submitData(3)>SUBMIT DATA</button>
+                  </div>
+  
+                </div>
+              </div>
+            </div>
+  
+            <div class="card shadow mb-3" *ngIf=editSuplente>
+              <div class="card-header py-3">
+                <p class="text-primary m-0 font-weight-bold">Suplente</p>
+              </div>
+              <div class="card-body">
+                <div class="form-row" style="margin-bottom:0px;">
+                  <div class="col-md-2 mb-3">
+                    <label for="startDate">INE Votante</label>
+                    <input type="text" class="form-control" placeholder="{{data['SUPLENTE_INE']}}" required
+                      [(ngModel)]="suplenteModel.votanteId" #opCarrier="ngModel" name="votante">
+                    <small class="text-danger" *ngIf=errAddress1>Please Enter A Valid Date</small>
+                  </div>
+                  <div class="col-md-2 mb-3">
+                    <label for="startDate">Mesa</label>
+                    <input type="text" class="form-control" placeholder="{{data['VOTANTE_MESA_ID']}}" required
+                      [(ngModel)]="suplenteModel.mesaId" #opCarrier="ngModel" name="startDate">
+                    <small class="text-danger" *ngIf=errAddress1>Please Enter A Valid Date</small>
+                  </div>
+                  <div class="col-md-2 mb-3">
+                    <label for="startDate">Partido</label>
+                    <input type="text" class="form-control" placeholder="{{data['VOTANTE_PARTIDO_SIGLAS']}}" required
+                      [(ngModel)]="suplenteModel.partidoId" #opCarrier="ngModel" name="startDate">
+                    <small class="text-danger" *ngIf=errAddress1>Please Enter A Valid Date</small>
+                  </div>
+                  <div class="col-md-2 mb-3">
+                    <label for="startDate">Fecha inicio</label>
+                    <input type="text" class="form-control" placeholder="{{data['START_DATE']}}" required
+                      [(ngModel)]="suplenteModel.startDate" #opCarrier="ngModel" name="startDate">
+                    <small class="text-danger" *ngIf=errAddress1>Please Enter A Valid Date</small>
+                  </div>
+                  <div class="col-md-2 mb-3">
+                    <label for="endDate">Fecha fin</label>
+                    <input type="text" class="form-control" placeholder="{{data['END_DATE']}}" required
+                      [(ngModel)]="suplenteModel.endDate" #opCarrier="ngModel" name="endDate">
+                    <small class="text-danger" *ngIf=errAddress2>Please Enter A Valid Date</small>
+                  </div>
+                  <div class="col-md-2 mb-3" style="margin-top:35px; margin-left:15px;">
+                    <button class="btn btn-primary btn-sm" type="submit" (click)=submitData(4)>SUBMIT DATA</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+            <div class="card shadow mb-3" *ngIf=editMiembro>
+              <div class="card-header py-3">
+                <p class="text-primary m-0 font-weight-bold">Miembro</p>
+              </div>
+              <div class="card-body">
+                <div class="form-row" style="margin-bottom:0px;">
+                  <div class="col-md-2 mb-3">
+                    <label for="endDate">INE Votante</label>
+                    <input type="text" class="form-control" placeholder="{{data['VOTANTE_INE']}}" required
+                      [(ngModel)]="miembroModel.votanteId" #opCarrier="ngModel" name="endDate">
+                    <small class="text-danger" *ngIf=errAddress2>Please Enter A Valid Date</small>
+                  </div>
+                  <div class="col-md-2 mb-3">
+                    <label for="endDate">Mesa</label>
+                    <input type="text" class="form-control" placeholder="{{data['VOTANTE_MESA_ID']}}" required
+                      [(ngModel)]="miembroModel.mesaId" #opCarrier="ngModel" name="endDate">
+                    <small class="text-danger" *ngIf=errAddress2>Please Enter A Valid Date</small>
+                  </div>
+                  <div class="col-md-2 mb-3">
+                    <label for="endDate">Partido</label>
+                    <input type="text" class="form-control" placeholder="{{data['VOTANTE_PARTIDO_SIGLAS']}}" required
+                      [(ngModel)]="miembroModel.partidoId" #opCarrier="ngModel" name="endDate">
+                    <small class="text-danger" *ngIf=errAddress2>Please Enter A Valid Date</small>
+                  </div>
+                  <div class="col-md-2 mb-3">
+                    <div class="form-group">
+                      <label for="email"><strong>Presidente Vocal</strong></label><input class="form-control" type="checkbox"
+                        placeholder="{{data['PRESIDENTE_VOCAL']}}" required [(ngModel)]="miembroModel.presidenteVocal" #opCarrier="ngModel"
+                        name="nombre"><small class="text-danger" *ngIf=errTotRmsAbvGrd>Please Enter A Valid Number</small>
+                    </div>
+                  </div>
+                  <div class="col-md-2 mb-3">
+                    <label for="endDate">INE Suplente</label>
+                    <input type="text" class="form-control" placeholder="{{data['SUPLENTE_INE']}}" required
+                      [(ngModel)]="miembroModel.suplenteIne" #opCarrier="ngModel" name="endDate">
+                    <small class="text-danger" *ngIf=errAddress2>Please Enter A Valid Date</small>
+                  </div>
+                  <div class="col-md-2 mb-3">
+                    <label for="startDate">Fecha inicio</label>
+                    <input type="text" class="form-control" placeholder="{{data['START_DATE']}}" required
+                      [(ngModel)]="miembroModel.startDate" #opCarrier="ngModel" name="startDate">
+                    <small class="text-danger" *ngIf=errAddress1>Please Enter A Valid Date</small>
+                  </div>
+                  <div class="col-md-2 mb-3">
+                    <label for="endDate">Fecha fin</label>
+                    <input type="text" class="form-control" placeholder="{{data['END_DATE']}}" required
+                      [(ngModel)]="miembroModel.endDate" #opCarrier="ngModel" name="endDate">
+                    <small class="text-danger" *ngIf=errAddress2>Please Enter A Valid Date</small>
+                  </div>
+                  <div class="col-md-2 mb-3" style="margin-top:35px; margin-left:15px;">
+                    <button class="btn btn-primary btn-sm" type="submit" (click)=submitData(5)>SUBMIT DATA</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+            <div class="card shadow mb-3" *ngIf=editLista>
+              <div class="card-header py-3">
+                <p class="text-primary m-0 font-weight-bold">Lista Nominal</p>
+              </div>
+              <div class="card-body">
+                <div class="form-row" style="margin-bottom:0px;">
+                  <div class="col-md-2 mb-3">
+                    <label for="endDate">INE</label>
+                    <input type="text" class="form-control" placeholder="{{data['INE']}}" required
+                      [(ngModel)]="listaModel.ine" #opCarrier="ngModel" name="endDate">
+                    <small class="text-danger" *ngIf=errAddress2>Please Enter A Valid Date</small>
+                  </div>
+                  <div class="col-md-2 mb-3">
+                    <label for="endDate">Nombre</label>
+                    <input type="text" class="form-control" placeholder="{{data['NOMBRE']}}" required
+                      [(ngModel)]="listaModel.nombre" #opCarrier="ngModel" name="endDate">
+                    <small class="text-danger" *ngIf=errAddress2>Please Enter A Valid Date</small>
+                  </div>
+                  <div class="col-md-2 mb-3">
+                    <label for="endDate">Partido</label>
+                    <input type="text" class="form-control" placeholder="{{data['PARTIDO_SIGLAS']}}" required
+                      [(ngModel)]="listaModel.partidoId" #opCarrier="ngModel" name="endDate">
+                    <small class="text-danger" *ngIf=errAddress2>Please Enter A Valid Date</small>
+                  </div>
+                  <div class="col-md-2 mb-3">
+                    <label for="endDate">Orden</label>
+                    <input type="text" class="form-control" placeholder="{{data['ORDEN']}}" required
+                      [(ngModel)]="listaModel.orden" #opCarrier="ngModel" name="endDate">
+                    <small class="text-danger" *ngIf=errAddress2>Please Enter A Valid Date</small>
+                  </div>
+                  <div class="col-md-2 mb-3">
+                    <label for="startDate">Fecha inicio</label>
+                    <input type="text" class="form-control" placeholder="{{data['START_DATE']}}" required
+                      [(ngModel)]="listaModel.startDate" #opCarrier="ngModel" name="startDate">
+                    <small class="text-danger" *ngIf=errAddress1>Please Enter A Valid Date</small>
+                  </div>
+                  <div class="col-md-2 mb-3">
+                    <label for="endDate">Fecha fin</label>
+                    <input type="text" class="form-control" placeholder="{{data['END_DATE']}}" required
+                      [(ngModel)]="listaModel.endDate" #opCarrier="ngModel" name="endDate">
+                    <small class="text-danger" *ngIf=errAddress2>Please Enter A Valid Date</small>
+                  </div>
+                  <div class="col-md-2 mb-3" style="margin-top:35px; margin-left:15px;">
+                    <button class="btn btn-primary btn-sm" type="submit" (click)=submitData(6)>SUBMIT DATA</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>

@@ -20,27 +20,6 @@ var cors = require('cors')
 
 app.use(cors())
 
-var features = ['LOTAREA', 'BLDGTYPE', 'HOUSESTYLE', 'OVERALLCOND', 'YEARBUILT',
-  'ROOFSTYLE', 'EXTERCOND', 'FOUNDATION', 'BSMTCOND', 'HEATING',
-  'HEATINGQC', 'CENTRALAIR', 'ELECTRICAL', 'FULLBATH', 'HALFBATH',
-  'BEDROOMABVGR', 'KITCHENABVGR', 'KITCHENQUAL', 'TOTRMSABVGRD',
-  'FIREPLACES', 'FIREPLACEQU', 'GARAGETYPE', 'GARAGEFINISH', 'GARAGECARS',
-  'GARAGECOND', 'POOLAREA', 'POOLQC', 'FENCE', 'MOSOLD', 'YRSOLD'];
-
-var NodeGeocoder = require('node-geocoder');
-
-var options = {
-  provider: 'mapquest',
-
-  // Optional depending on the providers
-  httpAdapter: 'https', // Default
-  apiKey: 'puEBOpI1vnXm8RZgz3dS5qJ7KhYQGYew', // for Mapquest, OpenCage, Google Premier
-  formatter: null         // 'gpx', 'string', ...
-};
-
-var geocoder = NodeGeocoder(options);
-
-
 let connStr = "DATABASE=" + process.env.DB_DATABASE + ";HOSTNAME=" + process.env.DB_HOSTNAME + ";PORT=" + process.env.DB_PORT + ";PROTOCOL=TCPIP;UID=" + process.env.DB_UID + ";PWD=" + process.env.DB_PWD + ";";
 
 app.post('/newDataEntry', function (request, response) {
@@ -90,26 +69,61 @@ function getViewName(view) {
   })(view);
 }
 
+function getUpdateQuery(view, obj, id) {
+  var table = process.env.DB_SCHEMA + "." + getViewName(view);
+  switch (view) {
+    case 0:
+      return "UPDATE " + table + " SET start_date='" + obj['startDate'] + "', end_date='" + obj['endDate'] + "' WHERE id='" + id + "';";
+    case 1:
+      return "UPDATE " + table + " SET colegio_id='" + obj['colegioId'] + "', letra='" + obj['letra'] + "', votos_vacios='" + obj['votosVacios'] + "', votos_nulos='" + obj['votosNulos'] + "' WHERE id='" + id + "';";
+    case 2:
+      return "UPDATE " + table + " SET nombre='" + obj['nombre'] + "', nombre_presidente='" + obj['presidente'] + "' WHERE siglas='" + id + "';";
+    case 3:
+      return "UPDATE " + table + " SET nombre='" + obj['nombre'] + "', nacimiento='" + obj['nacimiento'] + "', direccion='" + obj['direccion'] + "', mesa_id='" + obj['mesaId'] + "', partido_siglas='" + obj['partidoId'] + "', apoderado='" + obj['apoderado'] + "', mexicano='" + obj['mexicano'] + "', municipal_federal='" + obj['municipalFederal'] + "' WHERE ine_pasaporte='" + id + "';";
+    case 4:
+      return "UPDATE " + table + " SET votante_mesa_id='" + obj['mesaId'] + "', votante_partido_siglas='" + obj['partidoId'] + "', start_date='" + obj['startDate'] + "', end_date='" + obj['endDate'] + "' WHERE suplente_ine='" + id + "';";
+    case 5:
+      return "UPDATE " + table + " SET votante_ine='" + obj['votanteId'] + "', votante_mesa_id='" + obj['mesaId'] + "', votante_partido_siglas='" + obj['partidoId'] + "', presidente_vocal='" + obj['presidenteVocal'] + "', start_date='" + obj['startDate'] + "', end_date='" + obj['endDate'] + "' WHERE suplente_ine='" + id + "';";
+    case 6:
+      return "UPDATE " + table + " SET nombre='" + obj['nombre'] + "', partido_siglas='" + obj['partidoId'] + "', orden='" + obj['orden'] + "', start_date='" + obj['startDate'] + "', end_date='" + obj['endDate'] + "' WHERE ine='" + id + "';";
+    default:
+      return "";
+  }
+}
+
 function getInsertQuery(view, obj) {
   var table = process.env.DB_SCHEMA + "." + getViewName(view);
-    switch(view){
-      case 0:
-        return "INSERT INTO " + table + " (id, start_date, end_date) VALUES ('" + obj['id'] + "', '" + obj['startDate'] + "', '" + obj['endDate'] + "');";
-      case 1:
-        return "INSERT INTO " + table + " (id, colegio_id, letra, votos_vacios, votos_nulos) VALUES ('" + obj['id'] + "', '" + obj['colegioId'] + "', '" + obj['letra'] + "', '"+ obj['votosVacios'] + "', '"+ obj['votosNulos'] + "');";
-      case 2:
-        return "INSERT INTO " + table + " (siglas, nombre, nombre_presidente) VALUES ('" + obj['siglas'] + "', '" + obj['nombre'] + "', '" + obj['presidente'] + "');";
-      case 3:
-        return "INSERT INTO " + table + " (ine_pasaporte, nombre, nacimiento, direccion, mesa_id, partido_siglas, apoderado, mexicano, municipal_federal) VALUES ('" + obj['ine'] + "', '" + obj['nombre'] + "', '" + obj['nacimiento'] + "', '"+ obj['direccion'] + "', '"+ obj['mesaId'] + "', '"+ obj['partidoId'] + "', '"+ obj['apoderado'] + "', '"+ obj['mexicano'] + "', '"+ obj['municipalFederal'] + "');";
-      case 4:
-        return "INSERT INTO " + table + " (suplente_ine, votante_mesa_id, votante_partido_siglas, start_date, end_date) VALUES ('" + obj['votanteId'] + "', '" + obj['mesaId'] + "', '" + obj['partidoId'] + "', '" + obj['startDate'] + "', '" + obj['endDate'] + "');";
-      case 5:
-        return "INSERT INTO " + table + " (votante_ine, votante_mesa_id, votante_partido_siglas, presidente_vocal, suplente_ine, start_date, end_date) VALUES ('" + obj['votanteId'] + "', '" + obj['mesaId'] + "', '" + obj['partidoId'] + "', '" + obj['presidenteVocal'] + "', '" + obj['suplenteIne'] + "', '" + obj['startDate'] + "', '" + obj['endDate'] + "');";
-      case 6:
-        return "INSERT INTO " + table + " (ine, nombre, partido_siglas, orden, start_date, end_date) VALUES ('" + obj['ine'] + "', '" + obj['nombre'] + "', '" + obj['partidoId'] + "', '" + obj['orden'] + "', '" + obj['startDate'] + "', '" + obj['endDate'] + "');";
-      default:
-        return "";
-    }
+  switch (view) {
+    case 0:
+      return "INSERT INTO " + table + " (id, start_date, end_date) VALUES ('" + obj['id'] + "', '" + obj['startDate'] + "', '" + obj['endDate'] + "');";
+    case 1:
+      return "INSERT INTO " + table + " (id, colegio_id, letra, votos_vacios, votos_nulos) VALUES ('" + obj['id'] + "', '" + obj['colegioId'] + "', '" + obj['letra'] + "', '" + obj['votosVacios'] + "', '" + obj['votosNulos'] + "');";
+    case 2:
+      return "INSERT INTO " + table + " (siglas, nombre, nombre_presidente) VALUES ('" + obj['siglas'] + "', '" + obj['nombre'] + "', '" + obj['presidente'] + "');";
+    case 3:
+      return "INSERT INTO " + table + " (ine_pasaporte, nombre, nacimiento, direccion, mesa_id, partido_siglas, apoderado, mexicano, municipal_federal) VALUES ('" + obj['ine'] + "', '" + obj['nombre'] + "', '" + obj['nacimiento'] + "', '" + obj['direccion'] + "', '" + obj['mesaId'] + "', '" + obj['partidoId'] + "', '" + obj['apoderado'] + "', '" + obj['mexicano'] + "', '" + obj['municipalFederal'] + "');";
+    case 4:
+      return "INSERT INTO " + table + " (suplente_ine, votante_mesa_id, votante_partido_siglas, start_date, end_date) VALUES ('" + obj['votanteId'] + "', '" + obj['mesaId'] + "', '" + obj['partidoId'] + "', '" + obj['startDate'] + "', '" + obj['endDate'] + "');";
+    case 5:
+      return "INSERT INTO " + table + " (votante_ine, votante_mesa_id, votante_partido_siglas, presidente_vocal, suplente_ine, start_date, end_date) VALUES ('" + obj['votanteId'] + "', '" + obj['mesaId'] + "', '" + obj['partidoId'] + "', '" + obj['presidenteVocal'] + "', '" + obj['suplenteIne'] + "', '" + obj['startDate'] + "', '" + obj['endDate'] + "');";
+    case 6:
+      return "INSERT INTO " + table + " (ine, nombre, partido_siglas, orden, start_date, end_date) VALUES ('" + obj['ine'] + "', '" + obj['nombre'] + "', '" + obj['partidoId'] + "', '" + obj['orden'] + "', '" + obj['startDate'] + "', '" + obj['endDate'] + "');";
+    default:
+      return "";
+  }
+}
+
+function getIds(view) {
+  switch (view) {
+    case 0: return "ID";
+    case 1: return "ID";
+    case 2: return "SIGLAS";
+    case 3: return "INE_PASAPORTE";
+    case 4: return "SUPLENTE_INE";
+    case 5: return "SUPLENTE_INE";
+    case 6: return "INE";
+    default: return "";
+  }
 }
 
 app.post('/getData', function (request, response) {
@@ -138,9 +152,11 @@ app.post('/getUniqueData', function (request, response) {
     if (err) {
       return response.json({ success: -1, message: err });
     }
-    var table = getViewName(request.body.view);
-    var query = "SELECT * FROM " + process.env.DB_SCHEMA + "." + table + " WHERE ID=" + request.body.id + ";";
+    var idName = getIds(request.body['view']);
+    var table = process.env.DB_SCHEMA + "." + getViewName(request.body['view']);
+    var query = "SELECT * FROM " + table + " WHERE " + idName + "='" + request.body['id'] + "';";
     console.log(query);
+
     conn.query(query, function (err, data) {
       if (err) {
         return response.json({ success: -2, message: err });
@@ -164,51 +180,20 @@ app.post('/updateDataEntry', function (request, response) {
       return response.json({ success: -1, message: err });
     }
 
-    var str2 = "UPDATE " + process.env.DB_SCHEMA + ".HOME_ADDRESS SET ADDRESS1='" + request.body.addressInfo.address1 + "',ADDRESS2='" + request.body.addressInfo.address2 + "',CITY='" + request.body.addressInfo.city + "',STATE='" + request.body.addressInfo.state + "',COUNTRY='" + request.body.addressInfo.country + "',ZIPCODE=" + request.body.addressInfo.zipcode + " WHERE HOME_ID=" + request.body.id + ";";
+    var content = JSON.parse(request.body['content']);
 
-    var str4 = "INSERT INTO " + process.env.DB_SCHEMA + ".HOME_ADDRESS (ADDRESS1, ADDRESS2, CITY, STATE,ZIPCODE, COUNTRY,HOME_ID) VALUES ('" + request.body.addressInfo.address1 + "', '" + request.body.addressInfo.address2 + "', '" + request.body.addressInfo.city + "', '" + request.body.addressInfo.state + "', " + request.body.addressInfo.zipcode + ", '" + request.body.addressInfo.country + "', " + request.body.id + ");";
+    var query = getUpdateQuery(request.body['view'], content, request.body['id']);
+    console.log(query);
 
-    var str = "UPDATE " + process.env.DB_SCHEMA + ".HOME_SALES SET LOTAREA=" + request.body.data.lotArea + ", YEARBUILT=" + request.body.data.yearBuilt + ", BLDGTYPE='" + request.body.data.bldgType + "',HOUSESTYLE='" + request.body.data.houseStyle + "',OVERALLCOND=" + request.body.data.overallCond + ",ROOFSTYLE='" + request.body.data.roofStyle + "',EXTERCOND='" + request.body.data.exterCond + "',FOUNDATION='" + request.body.data.foundation + "',BSMTCOND='" + request.body.data.bsmtCond + "',HEATING='" + request.body.data.heating + "',HEATINGQC='" + request.body.data.heatingQC + "',CENTRALAIR='" + request.body.data.centralAir + "',ELECTRICAL='" + request.body.data.electrical + "',FULLBATH=" + request.body.data.fullBath + ",HALFBATH=" + request.body.data.halfBath + ",BEDROOMABVGR=" + request.body.data.bedroomAbvGr + ",KITCHENABVGR=" + request.body.data.kitchenAbvGr + ",KITCHENQUAL='" + request.body.data.kitchenQual + "',TOTRMSABVGRD=" + request.body.data.tempotRmsAbvGrd + ",FIREPLACES=" + request.body.data.fireplaces + ",FIREPLACEQU='" + request.body.data.fireplaceQu + "',GARAGETYPE='" + request.body.data.garageType + "',GARAGEFINISH='" + request.body.data.garageFinish + "',GARAGECARS=" + request.body.data.garageCars + ",GARAGECOND='" + request.body.data.garageCond + "',POOLAREA=" + request.body.data.poolArea + ",POOLQC='" + request.body.data.poolQC + "',FENCE='" + request.body.data.fence + "',MOSOLD=" + request.body.data.moSold + ",YRSOLD=" + request.body.data.yrSold + ",SALEPRICE=" + request.body.data.salePrice + " WHERE ID=" + request.body.id + ";";
-
-    var str3 = "SELECT * FROM " + process.env.DB_SCHEMA + ".HOME_ADDRESS WHERE HOME_ID=" + request.body.id + ";";
-
-    conn.query(str, function (err, data) {
+    conn.query(query, function (err, data) {
       if (err) {
         return response.json({ success: -2, message: err });
       }
-      conn.query(str3, function (err, data2) {
-        console.log(data);
-        if (err) {
-          return response.json({ success: -3, message: err });
-        }
-        else {
-          if (data2.length == 0) {
-            conn.query(str4, function (err, data) {
-              if (err) {
-                return response.json({ success: -2, message: err });
-              }
-              else {
-                conn.close(function () {
-                  return response.json({ success: 1, message: 'Data Edited!' });
-                });
-              }
-            });
-          }
-          else {
-            conn.query(str2, function (err, data) {
-              if (err) {
-                return response.json({ success: -2, message: err });
-              }
-              else {
-                conn.close(function () {
-                  return response.json({ success: 1, message: 'Data Edited!' });
-                });
-              }
-            });
-          }
-        }
-
-      });
+      else {
+        conn.close(function () {
+          return response.json({ success: 1, message: 'Data Edited!' });
+        });
+      }
     });
   });
 })
@@ -233,7 +218,6 @@ app.post('/deleteData', function (request, response) {
           });
         });
       }
-
     });
   });
 })

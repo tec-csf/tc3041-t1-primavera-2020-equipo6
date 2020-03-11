@@ -33,7 +33,6 @@ export class HttpService {
   }
 
   getUniqueDataFromDatabase(id, currentView) {
-    console.log(currentView);
     return this.http.post(environment.NODE_HOST + '/getUniqueData', { id: id, view:currentView }, this.httpOptions);
   }
 
@@ -43,11 +42,7 @@ export class HttpService {
 
   updateDataEntry(id, model, currentView) {
     const payload = JSON.stringify(model);
-    return this.http.post(environment.NODE_HOST + '/updateDataEntry', { id: id, data: model, view:currentView }, this.httpOptions);
-  }
-
-  getCoordinates(address1, city, state, zipcode) {
-    return this.http.post(environment.NODE_HOST + '/geocode', { address1: address1, city: city, state: state, zipcode: zipcode }, this.httpOptions);
+    return this.http.post(environment.NODE_HOST + '/updateDataEntry', { id: id, content: payload, view:currentView }, this.httpOptions);
   }
 
 }

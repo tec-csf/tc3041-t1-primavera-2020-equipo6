@@ -88,12 +88,43 @@ Utilizando el comando $git clone [link del repositorio]
 En este caso, creamos la BD localmente (Hay que tener: Una cuenta de Docker, Docker Desktop instalado e iniciar sesion en Docker Desktop).
 En la carpeta deseada, abrir la terminal y correr los siguientes comandos:
 
-*docker pull ibmcom/db2
+docker pull ibmcom/db2
 
-*docker run -itd --name mydb2 --privileged=true -p 50000:50000 -e LICENSE=accept -e DB2INST1_PASSWORD=password -e DBNAME=[cualquier nombre] ibmcom/db2 bash
+docker run -itd --name mydb2 --privileged=true -p 50000:50000 -e LICENSE=accept -e DB2INST1_PASSWORD=password -e DBNAME=[cualquier nombre] ibmcom/db2 bash
 
-*docker exec -ti mydb2 bash -c "su - db2inst1"
+docker exec -ti mydb2 bash -c "su - db2inst1"
 
+#### 3. Conectarse a la BD (en db2) y agregar las tablas.
+Utilizando los siguientes comandos, conectese a la base de datos en el contenedor:
+
+db2
+
+connect to [nombre de la base de datos]
+
+Despues, inserte todas las operaciones de creacion de tablas que se encuentran en /scripts/Comandos DB2 para generar DB.txt
+
+Finalmente, inserte la informacion de las tablas del CSV que se encuentra en /scripts/Votaciones_data.txt
+
+#### 4. Actualizar el archivo .env
+Copia esto a tu archivo .env:
+
+DB_DATABASE=testdb
+DB_HOSTNAME=localhost
+DB_PORT=50000
+DB_UID=db2inst1
+DB_PWD=password
+DB_SCHEMA=DB2ADB
+
+#### 5. Corre la aplicacion.
+Si no tienes instalado NPM ni YARN, utiliza los comandos en la terminal dentro de la carpeta donde esta la aplicacion:
+npm install
+yarn install
+
+En otra terminal, corre los comandos: 
+ng serve --open
+node server.js
+
+Finalmente, en un buscador (cualquiera), ingresa a la direccion http://localhost:8888 y listo!
 
 ## 3. Referencias
 #### Pagina donde creamos el diagrama EER.

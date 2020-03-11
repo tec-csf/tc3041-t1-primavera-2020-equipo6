@@ -65,8 +65,14 @@ Usamos esta estructura ya que para realizar elecciones ya que se cuenta con un c
 [Modelo UML](https://github.com/tec-csf/tc3041-t1-primavera-2020-equipo6/blob/SQL_Atemporal/database/UML.png)
 
 ### 2.3 Frontend
-
-*[Incluya aquí una explicación de la solución utilizada para el frontend de la tarea. No olvide incluir las ligas o referencias donde se puede encontrar información de los lenguajes de programación, frameworks y librerías utilizadas.]*
+El front end se realizo con Angular en donde se crearon wrappers, de los cuales obtienen los valores de la base de datos para asi poder visualizar la diferente información que tiene cada una de las diferentes tablas.
+Contamos con cinco principales partes para poder visualizar, editar, borrar los datos de las tablas.
+En el siguiente path: dbapp/src/app se encuentran 5 carpetas las cuales tienen el funcionamiento principal del front end, estas son: edit-data, header, load-data, models, view-data.
+En la carpeta edit-data la funcion que tiene es desplegar las tablas con las que contamos y los campos que se deben llenar par así poder modificar la información de manera correcta.
+En la carpeta header nos permite tener la información de en que tabla nos encontramos.
+En la carpeta load-data 
+En la carpeta models
+En la carpeta view-data
 
 #### 2.3.1 Lenguaje de programación
 Programado en Angular.ts, que es Typescript (parecido a Javascript)

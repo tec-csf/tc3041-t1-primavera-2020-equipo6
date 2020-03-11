@@ -71,7 +71,7 @@ En el siguiente path: dbapp/src/app se encuentran 5 carpetas las cuales tienen e
 En la carpeta edit-data la funcion que tiene es desplegar las tablas con las que la busqueda encontró y tambien modificar una fila seleccionada.
 En la carpeta header nos permite elegir dos diferentes vistas la de Load y View/Manage , donde te permitirá tanto visualizar su información o modificarla.
 En la carpeta load-data nos permitirá introducir datos una vez se llenen los datos necesarios de la tabla que se esta introudciendo un dato.
-En la carpeta models es la manera en que nos ayuda a vaciar los datos y poder cargarlos y escribirlos y las manda al json.
+La carpeta models es usada para generar clases de TypeScript de acuerdo con las tablas de la base de datos. Esto permite un manejo mas ordenado de la informacion, utilizando JSON como formato de comunicacion entre front y back end.
 En la carpeta view-data nos permitirá hacer alguna busqueda de de datos a partir de un rango de fechas.
 
 

@@ -5,6 +5,9 @@ export class VotanteInfo {
     public nacimiento:string,
     public direccion:string,
     public mesaId:string,
-    public partidoId:string
+    public partidoId:string,
+    public apoderado:string,
+    public mexicano:string,
+    public municipalFederal:string
   ) { }
 }

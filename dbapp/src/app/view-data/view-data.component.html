@@ -59,7 +59,6 @@
 													<th>ID</th>
 													<th>START DATE</th>
 													<th>END DATE</th>
-													<th>VIEW</th>
 													<th>EDIT</th>
 													<th>DELETE</th>
 
@@ -70,8 +69,6 @@
 													<td>{{item['ID']}}</td>
 													<td>{{item['START_DATE']}}</td>
 													<td>{{item['END_DATE']}}</td>
-													<td><button class="btn btn-warning btn-sm" type="button"
-															[routerLink]="['/viewEntry',item['ID']]">View</button></td>
 													<td><a [routerLink]="['/editData', 'colegio', item['ID']]"> <button
 																class="btn btn-info btn-sm" type="button">Edit</button> </a></td>
 													<td><button class="btn btn-danger btn-sm" type="button"
@@ -85,7 +82,6 @@
 													<th>ID</th>
 													<th>START DATE</th>
 													<th>END DATE</th>
-													<th>VIEW</th>
 													<th>EDIT</th>
 													<th>DELETE</th>
 												</tr>
@@ -94,24 +90,280 @@
 									</div>
 								</mat-tab>
 								<mat-tab label="Mesa">
-									<h1>Some more tab content</h1>
-									<p>...</p>
+									<div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
+										<table class="table dataTable my-0" id="dataTable">
+											<thead>
+												<tr>
+													<th>ID</th>
+													<th>COLEGIO</th>
+													<th>LETRA</th>
+													<th>VOTOS VACIOS</th>
+													<th>VOTOS NULOS</th>
+													<th>EDIT</th>
+													<th>DELETE</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr *ngFor="let item of data">
+													<td>{{item['ID']}}</td>
+													<td>{{item['COLEGIO_ID']}}</td>
+													<td>{{item['LETRA']}}</td>
+													<td>{{item['VOTOS_VACIOS']}}</td>
+													<td>{{item['VOTOS_NULOS']}}</td>
+													<td><a [routerLink]="['/editData', 'mesa', item['ID']]"> <button class="btn btn-info btn-sm"
+																type="button">Edit</button> </a></td>
+													<td><button class="btn btn-danger btn-sm" type="button"
+															(click)=deleteData(item)>Delete</button></td>
+
+												</tr>
+
+											</tbody>
+											<tfoot>
+												<tr>
+													<th>ID</th>
+													<th>COLEGIO</th>
+													<th>LETRA</th>
+													<th>VOTOS VACIOS</th>
+													<th>VOTOS NULOS</th>
+													<th>EDIT</th>
+													<th>DELETE</th>
+												</tr>
+											</tfoot>
+										</table>
+									</div>
 								</mat-tab>
 								<mat-tab label="Partido">
-									<h1>Some more tab content</h1>
-									<p>...</p>
+									<div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
+										<table class="table dataTable my-0" id="dataTable">
+											<thead>
+												<tr>
+													<th>SIGLAS</th>
+													<th>NOMBRE</th>
+													<th>PRESIDENTE</th>
+													<th>EDIT</th>
+													<th>DELETE</th>
+
+												</tr>
+											</thead>
+											<tbody>
+												<tr *ngFor="let item of data">
+													<td>{{item['SIGLAS']}}</td>
+													<td>{{item['NOMBRE']}}</td>
+													<td>{{item['NOMBRE_PRESIDENTE']}}</td>
+													<td><a [routerLink]="['/editData', 'partido', item['ID']]"> <button
+																class="btn btn-info btn-sm" type="button">Edit</button> </a></td>
+													<td><button class="btn btn-danger btn-sm" type="button"
+															(click)=deleteData(item)>Delete</button></td>
+
+												</tr>
+
+											</tbody>
+											<tfoot>
+												<tr>
+													<th>SIGLAS</th>
+													<th>NOMBRE</th>
+													<th>PRESIDENTE</th>
+													<th>EDIT</th>
+													<th>DELETE</th>
+												</tr>
+											</tfoot>
+										</table>
+									</div>
 								</mat-tab>
 								<mat-tab label="Votante">
-									<h1>Some more tab content</h1>
-									<p>...</p>
+									<div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
+										<table class="table dataTable my-0" id="dataTable">
+											<thead>
+												<tr>
+													<th>INE</th>
+													<th>NOMBRE</th>
+													<th>FECHA DE NACIMIENTO</th>
+													<th>DIRECCION</th>
+													<th>MESA</th>
+													<th>PARTIDO</th>
+													<th>APODERADO</th>
+													<th>MEXICANO</th>
+													<th>MUNICIPAL/FEDERAL</th>
+													<th>EDIT</th>
+													<th>DELETE</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr *ngFor="let item of data">
+													<td>{{item['INE_PASAPORTE']}}</td>
+													<td>{{item['NOMBRE']}}</td>
+													<td>{{item['NACIMIENTO']}}</td>
+													<td>{{item['DIRECCION']}}</td>
+													<td>{{item['MESA_ID']}}</td>
+													<td>{{item['PARTIDO_SIGLAS']}}</td>
+													<td>{{item['APODERADO']}}</td>
+													<td>{{item['MEXICANO']}}</td>
+													<td>{{item['MUNICIPAL_FEDERAL']}}</td>
+													<td><a [routerLink]="['/editData', 'votante', item['ID']]"> <button
+																class="btn btn-info btn-sm" type="button">Edit</button> </a></td>
+													<td><button class="btn btn-danger btn-sm" type="button"
+															(click)=deleteData(item)>Delete</button></td>
+
+												</tr>
+
+											</tbody>
+											<tfoot>
+												<tr>
+													<th>INE</th>
+													<th>NOMBRE</th>
+													<th>FECHA DE NACIMIENTO</th>
+													<th>DIRECCION</th>
+													<th>MESA</th>
+													<th>PARTIDO</th>
+													<th>APODERADO</th>
+													<th>MEXICANO</th>
+													<th>MUNICIPAL/FEDERAL</th>
+													<th>EDIT</th>
+													<th>DELETE</th>
+												</tr>
+											</tfoot>
+										</table>
+									</div>
 								</mat-tab>
-								<mat-tab label="Votos Municipales">
-									<h1>Some more tab content</h1>
-									<p>...</p>
+								<mat-tab label="Suplente">
+									<div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
+										<table class="table dataTable my-0" id="dataTable">
+											<thead>
+												<tr>
+													<th>INE</th>
+													<th>VOTANTE INE</th>
+													<th>VOTANTE MESA</th>
+													<th>VOTANTE PARTIDO</th>
+													<th>START DATE</th>
+													<th>END DATE</th>
+													<th>EDIT</th>
+													<th>DELETE</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr *ngFor="let item of data">
+													<td>{{item['SUPLENTE_INE']}}</td>
+													<td>{{item['VOTANTE_MESA_ID']}}</td>
+													<td>{{item['VOTANTE_PARTIDO_SIGLAS']}}</td>
+													<td>{{item['START_DATE']}}</td>
+													<td>{{item['END_DATE']}}</td>
+													<td><a [routerLink]="['/editData', 'suplente', item['ID']]"> <button
+																class="btn btn-info btn-sm" type="button">Edit</button> </a></td>
+													<td><button class="btn btn-danger btn-sm" type="button"
+															(click)=deleteData(item)>Delete</button></td>
+
+												</tr>
+
+											</tbody>
+											<tfoot>
+												<tr>
+													<th>INE</th>
+													<th>VOTANTE INE</th>
+													<th>VOTANTE MESA</th>
+													<th>VOTANTE PARTIDO</th>
+													<th>START DATE</th>
+													<th>END DATE</th>
+													<th>EDIT</th>
+													<th>DELETE</th>
+												</tr>
+											</tfoot>
+										</table>
+									</div>
 								</mat-tab>
-								<mat-tab label="Votos Federales">
-									<h1>Some more tab content</h1>
-									<p>...</p>
+								<mat-tab label="Miembro">
+									<div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
+										<table class="table dataTable my-0" id="dataTable">
+											<thead>
+												<tr>
+													<th>VOTANTE INE</th>
+													<th>VOTANTE MESA</th>
+													<th>VOTANTE PARTIDO</th>
+													<th>PRESIDENTE VOCAL</th>
+													<th>SUPLENTE INE</th>
+													<th>START DATE</th>
+													<th>END DATE</th>
+													<th>EDIT</th>
+													<th>DELETE</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr *ngFor="let item of data">
+													<td>{{item['VOTANTE_INE']}}</td>
+													<td>{{item['VOTANTE_MESA_ID']}}</td>
+													<td>{{item['VOTANTE_PARTIDO_SIGLAS']}}</td>
+													<td>{{item['PRESIDENTE_VOCAL']}}</td>
+													<td>{{item['SUPLENTE_INE']}}</td>
+													<td>{{item['START_DATE']}}</td>
+													<td>{{item['END_DATE']}}</td>
+													<td><a [routerLink]="['/editData', 'miembro', item['ID']]"> <button
+																class="btn btn-info btn-sm" type="button">Edit</button> </a></td>
+													<td><button class="btn btn-danger btn-sm" type="button"
+															(click)=deleteData(item)>Delete</button></td>
+
+												</tr>
+
+											</tbody>
+											<tfoot>
+												<tr>
+													<th>VOTANTE INE</th>
+													<th>VOTANTE MESA</th>
+													<th>VOTANTE PARTIDO</th>
+													<th>PRESIDENTE VOCAL</th>
+													<th>SUPLENTE INE</th>
+													<th>START DATE</th>
+													<th>END DATE</th>
+													<th>EDIT</th>
+													<th>DELETE</th>
+												</tr>
+											</tfoot>
+										</table>
+									</div>
+								</mat-tab>
+								<mat-tab label="Lista Nominal">
+									<div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
+										<table class="table dataTable my-0" id="dataTable">
+											<thead>
+												<tr>
+													<th>INE</th>
+													<th>NOMBRE</th>
+													<th>PARTIDO</th>
+													<th>ORDEN</th>
+													<th>START DATE</th>
+													<th>END DATE</th>
+													<th>EDIT</th>
+													<th>DELETE</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr *ngFor="let item of data">
+													<td>{{item['INE']}}</td>
+													<td>{{item['NOMBRE']}}</td>
+													<td>{{item['PARTIDO_SIGLAS']}}</td>
+													<td>{{item['ORDEN']}}</td>
+													<td>{{item['START_DATE']}}</td>
+													<td>{{item['END_DATE']}}</td>
+													<td><a [routerLink]="['/editData', 'lista', item['ID']]"> <button class="btn btn-info btn-sm"
+																type="button">Edit</button> </a></td>
+													<td><button class="btn btn-danger btn-sm" type="button"
+															(click)=deleteData(item)>Delete</button></td>
+
+												</tr>
+
+											</tbody>
+											<tfoot>
+												<tr>
+													<th>INE</th>
+													<th>NOMBRE</th>
+													<th>PARTIDO</th>
+													<th>ORDEN</th>
+													<th>START DATE</th>
+													<th>END DATE</th>
+													<th>EDIT</th>
+													<th>DELETE</th>
+												</tr>
+											</tfoot>
+										</table>
+									</div>
 								</mat-tab>
 							</mat-tab-group>
 

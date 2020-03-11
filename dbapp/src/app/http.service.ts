@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../environments/environment';
+import { HouseInfo } from './models/house-info';
 
 @Injectable({
   providedIn: 'root'
@@ -40,9 +41,9 @@ export class HttpService {
     return this.http.post(environment.NODE_HOST + '/deleteData', { id: id }, this.httpOptions);
   }
 
-  updateDataEntry(id, houseInfo, addressInfo) {
-    const payload = JSON.stringify(houseInfo);
-    return this.http.post(environment.NODE_HOST + '/updateDataEntry', { id: id, data: houseInfo, addressInfo: addressInfo }, this.httpOptions);
+  updateDataEntry(id, model, currentView) {
+    const payload = JSON.stringify(model);
+    return this.http.post(environment.NODE_HOST + '/updateDataEntry', { id: id, data: model, view:currentView }, this.httpOptions);
   }
 
   getCoordinates(address1, city, state, zipcode) {

@@ -52,6 +52,7 @@ app.post('/newDataEntry', function (request, response) {
     }
 
     var str = getInsertQuery(request.body['view'], content);
+    console.log(str);
     conn.query(str, function (err, data) {
       if (err) {
         return response.json({ success: -2, message: err });
@@ -66,13 +67,6 @@ app.post('/newDataEntry', function (request, response) {
 
 })
 
-// conn.query("SELECT MAX(ID) FROM "+process.env.DB_SCHEMA+"."+table+";", function (err, data) {
-//   if (err){
-//     return response.json({success:-2, message:err});
-//   }
-//   else{
-//     var id = data[0]['1'] + 1;
-
 function getViewName(view) {
   return (function (currView) {
     switch (currView) {
@@ -85,9 +79,11 @@ function getViewName(view) {
       case 3:
         return "VOTANTE";
       case 4:
-        return "MUNICIPAL";
+        return "SUPLENTE";
       case 5:
-        return "FEDERAL";
+        return "MIEMBRO";
+      case 6:
+        return "LISTA_NOMINAL";
       default:
         return "";
     }
@@ -95,24 +91,25 @@ function getViewName(view) {
 }
 
 function getInsertQuery(view, obj) {
-  return (function (currView) {
-    switch (currView) {
+  var table = process.env.DB_SCHEMA + "." + getViewName(view);
+    switch(view){
       case 0:
-        return "INSERT INTO " + process.env.DB_SCHEMA + ".COLEGIO (id, start_date, end_date) VALUES ('" + obj['id'] + "', '" + obj['startDate'] + "', '" + obj['endDate'] + "');";
+        return "INSERT INTO " + table + " (id, start_date, end_date) VALUES ('" + obj['id'] + "', '" + obj['startDate'] + "', '" + obj['endDate'] + "');";
       case 1:
-        return "MESA";
+        return "INSERT INTO " + table + " (id, colegio_id, letra, votos_vacios, votos_nulos) VALUES ('" + obj['id'] + "', '" + obj['colegioId'] + "', '" + obj['letra'] + "', '"+ obj['votosVacios'] + "', '"+ obj['votosNulos'] + "');";
       case 2:
-        return "PARTIDO";
+        return "INSERT INTO " + table + " (siglas, nombre, nombre_presidente) VALUES ('" + obj['siglas'] + "', '" + obj['nombre'] + "', '" + obj['presidente'] + "');";
       case 3:
-        return "VOTANTE";
+        return "INSERT INTO " + table + " (ine_pasaporte, nombre, nacimiento, direccion, mesa_id, partido_siglas, apoderado, mexicano, municipal_federal) VALUES ('" + obj['ine'] + "', '" + obj['nombre'] + "', '" + obj['nacimiento'] + "', '"+ obj['direccion'] + "', '"+ obj['mesaId'] + "', '"+ obj['partidoId'] + "', '"+ obj['apoderado'] + "', '"+ obj['mexicano'] + "', '"+ obj['municipalFederal'] + "');";
       case 4:
-        return "MUNICIPAL";
+        return "INSERT INTO " + table + " (suplente_ine, votante_mesa_id, votante_partido_siglas, start_date, end_date) VALUES ('" + obj['votanteId'] + "', '" + obj['mesaId'] + "', '" + obj['partidoId'] + "', '" + obj['startDate'] + "', '" + obj['endDate'] + "');";
       case 5:
-        return "FEDERAL";
+        return "INSERT INTO " + table + " (votante_ine, votante_mesa_id, votante_partido_siglas, presidente_vocal, suplente_ine, start_date, end_date) VALUES ('" + obj['votanteId'] + "', '" + obj['mesaId'] + "', '" + obj['partidoId'] + "', '" + obj['presidenteVocal'] + "', '" + obj['suplenteIne'] + "', '" + obj['startDate'] + "', '" + obj['endDate'] + "');";
+      case 6:
+        return "INSERT INTO " + table + " (ine, nombre, partido_siglas, orden, start_date, end_date) VALUES ('" + obj['ine'] + "', '" + obj['nombre'] + "', '" + obj['partidoId'] + "', '" + obj['orden'] + "', '" + obj['startDate'] + "', '" + obj['endDate'] + "');";
       default:
         return "";
     }
-  })(view);
 }
 
 app.post('/getData', function (request, response) {
@@ -123,7 +120,7 @@ app.post('/getData', function (request, response) {
 
     var table = getViewName(request.body.view);
 
-    var selectQuery = "SELECT * FROM " + process.env.DB_SCHEMA + "." + table + " ORDER BY ID DESC LIMIT " + request.body.num + ";";
+    var selectQuery = "SELECT * FROM " + process.env.DB_SCHEMA + "." + table + " LIMIT " + request.body.num + ";";
 
     conn.query(selectQuery, function (err, data) {
       if (err) {
@@ -240,25 +237,6 @@ app.post('/deleteData', function (request, response) {
     });
   });
 })
-
-app.post('/geocode', function (request, response) {
-  // Using callback
-  if (request.body.address1 == '') {
-    return response.json({ success: 1, message: "no address" });
-  }
-  else {
-    geocoder.geocode(request.body.address1 + ", " + request.body.city + ", " + request.body.state + ", " + request.body.zipcode, function (err, res) {
-      if (err) {
-        return response.json({ success: -2, message: err });
-      }
-      else {
-        return response.json({ success: 1, message: "Map Loaded", data: res });
-      }
-    });
-  }
-
-})
-
 
 app.listen(8888, function () {
   console.log("Server is listening on port 8888");

@@ -19,7 +19,6 @@ import { HeaderComponent } from './header/header.component';
 import { LoadDataComponent } from './load-data/load-data.component';
 import { ViewDataComponent } from './view-data/view-data.component';
 import { EditDataComponent } from './edit-data/edit-data.component';
-import { ViewEntryComponent } from './view-entry/view-entry.component';
 
 @NgModule({
   declarations: [
@@ -27,8 +26,7 @@ import { ViewEntryComponent } from './view-entry/view-entry.component';
     HeaderComponent,
     LoadDataComponent,
     ViewDataComponent,
-    EditDataComponent,
-    ViewEntryComponent
+    EditDataComponent
   ],
   imports: [
     BrowserModule,

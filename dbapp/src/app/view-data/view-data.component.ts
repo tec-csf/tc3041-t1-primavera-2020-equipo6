@@ -79,7 +79,6 @@ export class ViewDataComponent implements OnInit {
         console.log(data['message']);
       }
       else{
-        console.log('it works!')
         localStorage.setItem("dataDeleted","true");
         window.location.reload();
         window.scrollTo(0 , 0);

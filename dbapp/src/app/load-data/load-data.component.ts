@@ -3,11 +3,12 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpService }  from '../http.service';
 import { ColegioInfo } from '../models/colegio-info';
-import { FederalInfo } from '../models/federal-info';
 import { MesaInfo } from '../models/mesa-info';
-import { MunicipalInfo } from '../models/municipal-info';
 import { PartidoInfo } from '../models/partido-info';
 import { VotanteInfo } from '../models/votante-info';
+import { MiembroInfo } from '../models/miembro-info';
+import { SuplenteInfo } from '../models/suplente-info';
+import { ListaInfo } from '../models/lista-info';
 
 @Component({
   selector: 'app-load-data',
@@ -17,11 +18,12 @@ import { VotanteInfo } from '../models/votante-info';
 export class LoadDataComponent implements OnInit {
 
   colegioModel:ColegioInfo;
-  federalModel:FederalInfo;
   mesaModel:MesaInfo;
-  municipalModel:MunicipalInfo;
   partidoModel:PartidoInfo;
   votanteModel:VotanteInfo;
+  miembroModel:MiembroInfo;
+  suplenteModel:SuplenteInfo;
+  listaModel:ListaInfo;
 
   errErrorMessage:boolean;
   errMessage:string;
@@ -35,11 +37,12 @@ export class LoadDataComponent implements OnInit {
   constructor(private _router:Router, private _httpService:HttpService) {
 
     this.colegioModel = new ColegioInfo('', '', '');
-    this.federalModel = new FederalInfo('', '', '');
-    this.mesaModel = new MesaInfo('', '', '');
-    this.municipalModel = new MunicipalInfo('', '', '');
+    this.miembroModel = new MiembroInfo('', '', '', '0', '', '', '');
+    this.mesaModel = new MesaInfo('', '', '', '', '');
+    this.suplenteModel = new SuplenteInfo('', '', '', '', '');
     this.partidoModel = new PartidoInfo('', '', '');
-    this.votanteModel = new VotanteInfo('', '', '', '', '', '');
+    this.listaModel = new ListaInfo('', '', '', '', '', '');
+    this.votanteModel = new VotanteInfo('', '', '', '', '', '', '0', '0', '0');
     
 
     this.greenErrorMessage= false;
@@ -62,13 +65,18 @@ export class LoadDataComponent implements OnInit {
       case 1: return this.mesaModel;
       case 2: return this.partidoModel;
       case 3: return this.votanteModel;
-      case 4: return this.municipalModel;
-      case 5: return this.federalModel;
+      case 4: return this.suplenteModel;
+      case 5: return this.miembroModel;
+      case 6: return this.listaModel;
       default: return null;
   }
   }
 
   submitData(table){
+    if (this.votanteModel.apoderado = 'true') {this.votanteModel.apoderado = '1'}
+    if (this.votanteModel.mexicano = 'true') {this.votanteModel.mexicano = '1'}
+    if (this.votanteModel.municipalFederal = 'true') {this.votanteModel.municipalFederal = '1'}
+    if (this.miembroModel.presidenteVocal = 'true') {this.miembroModel.presidenteVocal = '1'}
     console.log(this.colegioModel);
     var err=this._httpService.createNewDataEntry(this.getModel(table), table);
       err.subscribe(data=>{

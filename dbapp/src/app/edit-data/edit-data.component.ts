@@ -1,13 +1,14 @@
 
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpService } from '../http.service';
 import { ColegioInfo } from '../models/colegio-info';
-import { FederalInfo } from '../models/federal-info';
 import { MesaInfo } from '../models/mesa-info';
-import { MunicipalInfo } from '../models/municipal-info';
 import { PartidoInfo } from '../models/partido-info';
 import { VotanteInfo } from '../models/votante-info';
+import { SuplenteInfo } from '../models/suplente-info';
+import { MiembroInfo } from '../models/miembro-info';
+import { ListaInfo } from '../models/lista-info';
 
 
 @Component({
@@ -17,36 +18,38 @@ import { VotanteInfo } from '../models/votante-info';
 })
 export class EditDataComponent implements OnInit {
 
-  rowID:string;
-  data:any;
-  view:number;
+  rowID: string;
+  data: any;
+  view: number;
 
-  showMessage:boolean;
-  showData:boolean;
+  showMessage: boolean;
+  showData: boolean;
 
-  errErrorMessage:boolean;
-  errMessage:string;
+  errErrorMessage: boolean;
+  errMessage: string;
 
-  greenErrorMessage:boolean;
-  greenMessage:string;
+  greenErrorMessage: boolean;
+  greenMessage: string;
 
-  editColegio:boolean;
-  editMesa:boolean;
-  editPartido:boolean;
-  editVotante:boolean;
-  editMunicipal:boolean;
-  editFederal:boolean;
+  editColegio: boolean;
+  editMesa: boolean;
+  editPartido: boolean;
+  editVotante: boolean;
+  editSuplente: boolean;
+  editMiembro: boolean;
+  editLista: boolean;
 
-  colegioModel:ColegioInfo;
-  federalModel:FederalInfo;
-  mesaModel:MesaInfo;
-  municipalModel:MunicipalInfo;
-  partidoModel:PartidoInfo;
-  votanteModel:VotanteInfo;
+  colegioModel: ColegioInfo;
+  mesaModel: MesaInfo;
+  partidoModel: PartidoInfo;
+  votanteModel: VotanteInfo;
+  suplenteModel: SuplenteInfo;
+  miembroModel: MiembroInfo
+  listaModel: ListaInfo;
 
-  validateInputs:boolean;
+  validateInputs: boolean;
 
-  constructor(private _activaterouter:ActivatedRoute, private _httpService:HttpService, private _router: Router) {
+  constructor(private _activaterouter: ActivatedRoute, private _httpService: HttpService, private _router: Router) {
     this.rowID = '';
     this.data = [];
     this.view = 0;
@@ -56,17 +59,19 @@ export class EditDataComponent implements OnInit {
     this.editMesa = false;
     this.editPartido = false;
     this.editVotante = false;
-    this.editMunicipal = false;
-    this.editFederal = false;
+    this.editSuplente = false;
+    this.editMiembro = false;
+    this.editLista = false;
 
     this.validateInputs = true;
 
     this.colegioModel = new ColegioInfo('', '', '');
-    this.federalModel = new FederalInfo('', '', '');
-    this.mesaModel = new MesaInfo('', '', '');
-    this.municipalModel = new MunicipalInfo('', '', '');
+    this.mesaModel = new MesaInfo('', '', '', '', '');
     this.partidoModel = new PartidoInfo('', '', '');
-    this.votanteModel = new VotanteInfo('', '', '', '', '', '');
+    this.votanteModel = new VotanteInfo('', '', '', '', '', '', '', '', '');
+    this.suplenteModel = new SuplenteInfo('', '', '', '', '');
+    this.miembroModel = new MiembroInfo('', '', '', '', '', '', '');
+    this.listaModel = new ListaInfo('', '', '', '', '', '');
 
     this.showMessage = true;
     this.showData = false;
@@ -74,25 +79,22 @@ export class EditDataComponent implements OnInit {
     this.errErrorMessage = false;
     this.errMessage = '';
 
-    this.greenErrorMessage= false;
+    this.greenErrorMessage = false;
     this.greenMessage = '';
   }
 
   ngOnInit() {
     this._activaterouter.params.subscribe(
-      params=>{
+      params => {
         this.rowID = params['id'];
-        console.log(params);
         this.setTypeBools(params['type']);
-        console.log('rowID: ' + this.rowID);
       })
-      this.getDataEntry();
+    this.getDataEntry();
   }
 
   setTypeBools(type) {
-    switch(type) {
+    switch (type) {
       case "colegio": {
-        console.log("colegio");
         this.editColegio = true;
         this.view = 0;
         break;
@@ -112,55 +114,62 @@ export class EditDataComponent implements OnInit {
         this.view = 3;
         break;
       }
-      case "municipal": {
-        this.editMunicipal = true;
+      case "suplente": {
+        this.editSuplente = true;
         this.view = 4;
         break;
       }
-      case "federal": {
-        this.editFederal = true;
+      case "miembro": {
+        this.editMiembro = true;
+        this.view = 5;
+        break;
+      }
+      case "lista": {
+        this.editLista = true;
         this.view = 5;
         break;
       }
     }
   }
 
-  checkInputs(){
+  checkInputs() {
     return true;
   }
 
-  submitData(){
-    // var check = this.checkInputs();
-    // console.log(check);
-    // if (check == false){
-    //   this.errMessage = 'Please enter the fields correctly!';
-    //   this.errErrorMessage = true;
-    //   window.scrollTo(0 , 0);
-    // }
-    // else{
-    //   this.errErrorMessage = false;
-    //   var dataObs = this._httpService.updateDataEntry(this.rowID,this.model, this.addressModel);
-    //   dataObs.subscribe(data=>{
-    //     if(data['success'] != 1){
-    //       console.log(data['message']);
-    //     }
-    //     else{
-    //       console.log(data['message']);
-    //       localStorage.setItem("dataUpdated","true");
-    //       this._router.navigate(['/viewData']);
-    //     }
-    //   })
-    // }
-
+  getCurrentModel() {
+    switch (this.view) {
+      case 0: return this.colegioModel;
+      case 1: return this.mesaModel;
+      case 2: return this.partidoModel;
+      case 3: return this.votanteModel;
+      case 4: return this.suplenteModel;
+      case 5: return this.mesaModel;
+      case 6: return this.listaModel;
+    }
   }
 
-  getDataEntry(){
-    var dataObs = this._httpService.getUniqueDataFromDatabase(this.rowID, this.view);
-    dataObs.subscribe(data=>{
-      if(data['success'] != 1){
+  submitData() {
+    this.errErrorMessage = false;
+    var dataObs = this._httpService.updateDataEntry(this.rowID, this.getCurrentModel(), this.view);
+    dataObs.subscribe(data => {
+      if (data['success'] != 1) {
         console.log(data['message']);
       }
-      else{
+      else {
+        console.log(data['message']);
+        localStorage.setItem("dataUpdated", "true");
+        this._router.navigate(['/viewData']);
+      }
+    })
+  }
+
+  getDataEntry() {
+    var dataObs = this._httpService.getUniqueDataFromDatabase(this.rowID, this.view);
+    dataObs.subscribe(data => {
+      if (data['success'] != 1) {
+        console.log(data['message']);
+      }
+      else {
         this.data = data['data'][0];
         this.showMessage = false;
         this.showData = true;

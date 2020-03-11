@@ -69,6 +69,7 @@ Usamos esta estructura ya que para realizar elecciones ya que se cuenta con un c
 *[Incluya aquí una explicación de la solución utilizada para el frontend de la tarea. No olvide incluir las ligas o referencias donde se puede encontrar información de los lenguajes de programación, frameworks y librerías utilizadas.]*
 
 #### 2.3.1 Lenguaje de programación
+Programado en Angular.js, que es Typescript (parecido a Javascript)
 #### 2.3.2 Framework
 #### 2.3.3 Librerías de funciones o dependencias
 
@@ -77,6 +78,7 @@ Usamos esta estructura ya que para realizar elecciones ya que se cuenta con un c
 *[Incluya aquí una explicación de la solución utilizada para el backend de la tarea. No olvide incluir las ligas o referencias donde se puede encontrar información de los lenguajes de programación, frameworks y librerías utilizadas.]*
 
 #### 2.4.1 Lenguaje de programación
+Programado en Node.js, que es Javascript.
 #### 2.4.2 Framework
 #### 2.4.3 Librerías de funciones o dependencias
 

@@ -68,11 +68,12 @@ Usamos esta estructura ya que para realizar elecciones ya que se cuenta con un c
 El front end se realizo con Angular en donde se crearon wrappers, de los cuales obtienen los valores de la base de datos para asi poder visualizar la diferente información que tiene cada una de las diferentes tablas.
 Contamos con cinco principales partes para poder visualizar, editar, borrar los datos de las tablas.
 En el siguiente path: dbapp/src/app se encuentran 5 carpetas las cuales tienen el funcionamiento principal del front end, estas son: edit-data, header, load-data, models, view-data.
-En la carpeta edit-data la funcion que tiene es desplegar las tablas con las que la busqueda encontró.
+En la carpeta edit-data la funcion que tiene es desplegar las tablas con las que la busqueda encontró y tambien modificar una fila seleccionada.
 En la carpeta header nos permite elegir dos diferentes vistas la de Load y View/Manage , donde te permitirá tanto visualizar su información o modificarla.
 En la carpeta load-data nos permitirá introducir datos una vez se llenen los datos necesarios de la tabla que se esta introudciendo un dato.
 En la carpeta models es la manera en que nos ayuda a vaciar los datos y poder cargarlos y escribirlos y las manda al json.
 En la carpeta view-data nos permitirá hacer alguna busqueda de de datos a partir de un rango de fechas.
+
 
 
 #### 2.3.1 Lenguaje de programación

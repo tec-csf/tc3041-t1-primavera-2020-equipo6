@@ -82,7 +82,17 @@ Usamos esta estructura ya que para realizar elecciones ya que se cuenta con un c
 
 ## 2.5 Pasos a seguir para utilizar la aplicación
 
-#### 1. Clonar el repositorio de Github a su PC (en la carpeta que el usuario desee). Utilizando el comando $git clone [link del repositorio]
+#### 1. Clonar el repositorio de Github a su PC (en la carpeta que el usuario desee). 
+Utilizando el comando $git clone [link del repositorio]
+#### 2. Crear una instancia de IBM_DB2:
+En este caso, creamos la BD localmente (Hay que tener: Una cuenta de Docker, Docker Desktop instalado e iniciar sesion en Docker Desktop).
+En la carpeta deseada, abrir la terminal y correr los siguientes comandos:
+
+*docker pull ibmcom/db2
+
+*docker run -itd --name mydb2 --privileged=true -p 50000:50000 -e LICENSE=accept -e DB2INST1_PASSWORD=password -e DBNAME=[cualquier nombre] ibmcom/db2 bash
+
+*docker exec -ti mydb2 bash -c "su - db2inst1"
 
 
 ## 3. Referencias

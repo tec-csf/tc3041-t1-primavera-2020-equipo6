@@ -27,9 +27,10 @@ export class HttpService {
     return this.http.post(environment.NODE_HOST + '/newDataEntry', { content: payload, view:currentView }, this.httpOptions);
   }
 
-  getDataFromDatabase(id, currentView) {
+  getDataFromDatabase(id, currentView, histData) {
     console.log(environment.NODE_HOST)
-    return this.http.post(environment.NODE_HOST + '/getData', { num: id, view:currentView }, this.httpOptions);
+    const payload = JSON.stringify(histData);
+    return this.http.post(environment.NODE_HOST + '/getData', { num: id, view:currentView, histData:payload }, this.httpOptions);
   }
 
   getUniqueDataFromDatabase(id, currentView) {

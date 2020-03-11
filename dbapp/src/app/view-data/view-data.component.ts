@@ -2,6 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpService }  from '../http.service';
+import { HistData } from '../models/hist-data';
 
 @Component({
   selector: 'app-view-data',
@@ -14,7 +15,7 @@ export class ViewDataComponent implements OnInit {
 
   showData:boolean;
 
-  historicalData:boolean;
+  histData:HistData;
 
   showUpdateDataMessage:boolean;
 
@@ -29,12 +30,12 @@ export class ViewDataComponent implements OnInit {
   constructor(private _httpService:HttpService, private _router: Router) {
     this.data = [];
     this.showMessage  = true;
-    this.historicalData = false;
     this.showData = false;
     this.showUpdateDataMessage = false;
     this.numOfData = '10';
     this.showDataDeletedMessage = false;
     this.currentView = 0;
+    this.histData = new HistData(false, '', '');
   }
 
   ngOnInit() {
@@ -51,7 +52,7 @@ export class ViewDataComponent implements OnInit {
     console.log(this.currentView);
     //this.showData = false;
     //this.showMessage  = true;
-    var dataObs = this._httpService.getDataFromDatabase(this.numOfData, this.currentView);
+    var dataObs = this._httpService.getDataFromDatabase(this.numOfData, this.currentView, this.histData);
     dataObs.subscribe(data=>{
       if(data['success'] != 1){
         console.log(data['message']);

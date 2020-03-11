@@ -134,7 +134,10 @@ app.post('/getData', function (request, response) {
 
     var table = getViewName(request.body.view);
 
-    var selectQuery = "SELECT * FROM " + process.env.DB_SCHEMA + "." + table + " LIMIT " + request.body.num + ";";
+    var histData = JSON.parse(request.body['histData']);
+    var temporalData = getTempQuery(histData);
+
+    var selectQuery = "SELECT * FROM " + process.env.DB_SCHEMA + "." + table + " " + temporalData + " LIMIT " + request.body.num + ";";
 
     conn.query(selectQuery, function (err, data) {
       if (err) {
@@ -146,6 +149,14 @@ app.post('/getData', function (request, response) {
     });
   });
 })
+
+function getTempQuery(histData) {
+  if (histData.enable) {
+    return "FOR BUSINESS_TIME FROM '"+ histData.startDate +"' TO '" + histData.endDate + "'";
+  } else {
+    return "";
+  }
+}
 
 app.post('/getUniqueData', function (request, response) {
   ibmdb.open(connStr, function (err, conn) {

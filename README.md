@@ -69,18 +69,41 @@ Usamos esta estructura ya que para realizar elecciones ya que se cuenta con un c
 *[Incluya aquí una explicación de la solución utilizada para el frontend de la tarea. No olvide incluir las ligas o referencias donde se puede encontrar información de los lenguajes de programación, frameworks y librerías utilizadas.]*
 
 #### 2.3.1 Lenguaje de programación
-Programado en Angular.js, que es Typescript (parecido a Javascript)
+Programado en Angular.ts, que es Typescript (parecido a Javascript)
 #### 2.3.2 Framework
+Angular.ts
 #### 2.3.3 Librerías de funciones o dependencias
+import { Component, OnInit } from '@angular/core';
+import { Router,ActivatedRoute }  from '@angular/router';
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { HttpService } from './http.service';
+import { HttpClientModule, HttpClient } from '@angular/common/http'
+import { FormsModule } from '@angular/forms';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { AgmCoreModule } from '@agm/core';
+import { MatTabsModule } from '@angular/material/tabs';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule, MatInputModule } from '@angular/material';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { HeaderComponent } from './header/header.component';
+import { LoadDataComponent } from './load-data/load-data.component';
+import { ViewDataComponent } from './view-data/view-data.component';
+import { EditDataComponent } from './edit-data/edit-data.component';
 
 ### 2.4 Backend
-
-*[Incluya aquí una explicación de la solución utilizada para el backend de la tarea. No olvide incluir las ligas o referencias donde se puede encontrar información de los lenguajes de programación, frameworks y librerías utilizadas.]*
+El backend de la aplicacion se encuentra principalmente en el archivo server.js, donde, utilizando el archivo .env en donde esta la conexion a la BD en Docker, obtenemos la informacion de la BD de cada tabla con funciones GET. Tambien, se encuentran nuestras funciones db2 de insert, update y delete de cada tabla.
 
 #### 2.4.1 Lenguaje de programación
 Programado en Node.js, que es Javascript.
 #### 2.4.2 Framework
+Node.js
 #### 2.4.3 Librerías de funciones o dependencias
+Utiliza principalmente el archivo .env para hacer las conexiones de la DB de db2 a Node.js
 
 ## 2.5 Pasos a seguir para utilizar la aplicación
 

@@ -82,7 +82,8 @@ Usamos esta estructura ya que para realizar elecciones ya que se cuenta con un c
 
 ## 2.5 Pasos a seguir para utilizar la aplicación
 
-*[Incluya aquí una guía paso a paso para poder utilizar la aplicación, desde la clonación del repositorio hasta el despliegue de la solución en una plataforma en la nube.]*
+#### 1. Clonar el repositorio de Github a su PC (en la carpeta que el usuario desee). Utilizando el comando $git clone [link del repositorio]
+
 
 ## 3. Referencias
 #### Pagina donde creamos el diagrama EER.
